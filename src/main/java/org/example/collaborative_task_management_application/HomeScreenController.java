@@ -1,5 +1,5 @@
 package org.example.collaborative_task_management_application;
-
+import org.example.collaborative_task_management_application.databases.Main_database_connection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +17,14 @@ public class HomeScreenController {
 
     @FXML
     private Button exit_button;
+    @FXML
+    private Button delete_account_button;
+    @FXML
+    private AnchorPane delete_anchorpane;
+    @FXML
+    private AnchorPane edit_details_anchorpane;
+    @FXML
+    private AnchorPane more_anchorpane;
 
     @FXML
     private AnchorPane kanban_anchorpane;
@@ -74,6 +82,17 @@ public class HomeScreenController {
         settings_anchorpane.setVisible(true);
     }
     @FXML
+    private void setEdit_details_anchorpane(){
+        edit_details_anchorpane.setVisible(true);
+        more_anchorpane.setVisible(false);
+
+    }
+    @FXML
+    private void setDelete_anchorpane(){
+        delete_anchorpane.setVisible(true);
+    }
+
+    @FXML
     public void setlogout_button() throws IOException {
         logout_button.getScene().getWindow().hide();
         Parent parent = FXMLLoader.load(getClass().getResource("login-screen.fxml"));
@@ -89,5 +108,8 @@ public class HomeScreenController {
         stage.close();
 
     }
-
+    @FXML
+    public void setName_label(String username){
+        name_label.setText(username);
+    }
 }

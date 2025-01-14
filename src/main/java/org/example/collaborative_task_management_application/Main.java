@@ -17,6 +17,7 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login-screen.fxml"));
         Pane root = fxmlLoader.load();
 
+
         root.setOnMousePressed(event -> {
             x = event.getSceneX();
             y = event.getSceneY();
@@ -28,10 +29,12 @@ public class Main extends Application {
         });
 
         Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("all.css").toExternalForm());
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
     }
+
     public static void main(String[] args) {
         launch();
     }

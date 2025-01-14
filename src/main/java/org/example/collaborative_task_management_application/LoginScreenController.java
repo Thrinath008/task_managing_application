@@ -3,6 +3,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.StageStyle;
 import org.example.collaborative_task_management_application.backend.*;
 import org.example.collaborative_task_management_application.databases.Main_database_connection;
@@ -27,7 +29,7 @@ public class LoginScreenController implements Initializable {
     private Button exit_button;
 
     @FXML
-    private TextField id_textfield;
+    private TextField id_textfield = new TextField();
 
     @FXML
     private AnchorPane login_anchor;
@@ -64,10 +66,12 @@ public class LoginScreenController implements Initializable {
         Parent parent = FXMLLoader.load(getClass().getResource("SignIn-screen.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(parent);
+        scene.getStylesheets().add(getClass().getResource("all.css").toExternalForm());
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setScene(scene);
         stage.show();
     }
+
 
 
     @FXML
@@ -76,9 +80,21 @@ public class LoginScreenController implements Initializable {
         stage.close();
 
     }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        id_textfield.setOnKeyPressed(e->{
+            switch (e.getCode()){
+                case ENTER -> password_field.requestFocus();
+            }
+        });
+        password_field.setOnKeyPressed(e->{
+            switch (e.getCode()){
+                case ENTER -> login_button.fire();
+            }
+        });
         String []items = {"employee","Admin","Manager"};
+
         role_picker.getItems().addAll(items);
         role_picker.setOnAction(e->{
             String data = role_picker.getSelectionModel().getSelectedItem().toString();
@@ -93,6 +109,7 @@ public class LoginScreenController implements Initializable {
             }else{
                 role_label.setText(data);
             }
+            id_textfield.requestFocus();
 
         });
 
@@ -107,6 +124,8 @@ public class LoginScreenController implements Initializable {
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("home-screen.fxml"));
                 Stage stage = new Stage();
                 Pane root = fxmlLoader.load();
+                HomeScreenController homeScreenController = fxmlLoader.getController();
+                homeScreenController.setName_label(id_textfield.getText());
 
                 root.setOnMousePressed(event -> {
                     x = event.getSceneX();
@@ -119,6 +138,7 @@ public class LoginScreenController implements Initializable {
                 });
 
                 Scene scene = new Scene(root);
+                scene.getStylesheets().add(getClass().getResource("all.css").toExternalForm());
                 stage.initStyle(StageStyle.UNDECORATED);
                 stage.setScene(scene);
                 stage.show();
