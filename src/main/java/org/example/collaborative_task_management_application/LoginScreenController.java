@@ -112,7 +112,6 @@ public class LoginScreenController implements Initializable {
             id_textfield.requestFocus();
 
         });
-
     }
     public void setLogin_button(ActionEvent e) throws IOException {
         if (id_textfield.getText().isEmpty()||password_field.getText().isEmpty()){
@@ -120,30 +119,33 @@ public class LoginScreenController implements Initializable {
         }else {
             if (Main_database_connection.loginEmployee(id_textfield.getText(),password_field.getText())){
                 login_button.getScene().getWindow().hide();
+                if (role_picker.getSelectionModel().getSelectedItem().toString()=="Admin"){
+                    setadminscreen();
+                    showAlert(Alert.AlertType.CONFIRMATION,"success","login success");
+                }else {
+                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("home-screen.fxml"));
+                    Stage stage = new Stage();
+                    Pane root = fxmlLoader.load();
+                    HomeScreenController homeScreenController = fxmlLoader.getController();
+                    homeScreenController.setName_label(id_textfield.getText());
 
-                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("home-screen.fxml"));
-                Stage stage = new Stage();
-                Pane root = fxmlLoader.load();
-                HomeScreenController homeScreenController = fxmlLoader.getController();
-                homeScreenController.setName_label(id_textfield.getText());
+                    root.setOnMousePressed(event -> {
+                        x = event.getSceneX();
+                        y = event.getSceneY();
+                    });
 
-                root.setOnMousePressed(event -> {
-                    x = event.getSceneX();
-                    y = event.getSceneY();
-                });
+                    root.setOnMouseDragged(event -> {
+                        stage.setX(event.getScreenX() - x);
+                        stage.setY(event.getScreenY() - y);
+                    });
 
-                root.setOnMouseDragged(event -> {
-                    stage.setX(event.getScreenX() - x);
-                    stage.setY(event.getScreenY() - y);
-                });
-
-                Scene scene = new Scene(root);
-                scene.getStylesheets().add(getClass().getResource("all.css").toExternalForm());
-                stage.initStyle(StageStyle.UNDECORATED);
-                stage.setScene(scene);
-                stage.show();
-                showAlert(Alert.AlertType.CONFIRMATION,"success","login success");
-
+                    Scene scene = new Scene(root);
+                    scene.getStylesheets().add(getClass().getResource("all.css").toExternalForm());
+                    stage.initStyle(StageStyle.UNDECORATED);
+                    stage.setScene(scene);
+                    stage.show();
+                    showAlert(Alert.AlertType.CONFIRMATION,"success","login success");
+                }
             }else {
                 showAlert(Alert.AlertType.ERROR,"invalid info:"," type slowly boy\n try again or signUp");
                 id_textfield.clear();
@@ -158,6 +160,14 @@ public class LoginScreenController implements Initializable {
         alert.initStyle(StageStyle.UNDECORATED);
         alert.show();
 
+    }
+    private void setadminscreen() throws IOException {
+        Parent parent = FXMLLoader.load(getClass().getResource("admin-home-screen.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(parent);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

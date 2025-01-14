@@ -56,7 +56,7 @@ public class SignInScreenController implements Initializable {
         Stage stage = (Stage)exit_button.getScene().getWindow();
         stage.close();
     }
-    public void setSignup_button(ActionEvent event){
+    public void setSignup_button(ActionEvent event) throws IOException {
         String name = name_textfield.getText();
         String email = email_textfield.getText();
         String password = password_textfield.getText();
@@ -73,6 +73,14 @@ public class SignInScreenController implements Initializable {
             boolean success = Main_database_connection.addEmployee(name,email,password);
             if (success) {
                 System.out.println("Employee added successfully in another package!");
+                signup_button.getScene().getWindow().hide();
+                Parent parent = FXMLLoader.load(getClass().getResource("login-screen.fxml"));
+                Stage stage = new Stage();
+                Scene scene = new Scene(parent);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(scene);
+                stage.show();
+                showAlert(Alert.AlertType.CONFIRMATION,"Successful","U have completed signS");
             } else {
                 System.out.println("Failed to add employee.");
             }
