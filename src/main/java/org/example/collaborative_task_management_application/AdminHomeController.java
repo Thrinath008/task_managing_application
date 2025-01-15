@@ -1,18 +1,54 @@
 package org.example.collaborative_task_management_application;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.example.collaborative_task_management_application.databases.Main_database_connection;
 
 import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class AdminHomeController {
+public class AdminHomeController implements Initializable {
+
+
+    @FXML
+    private TableView<LogEntry> log_tabel_view;
+    @FXML
+    private TableColumn<LogEntry,String> action_type_col;
+    @FXML
+    private TableColumn<LogEntry,String> description_col;
+    @FXML
+    private TableColumn<LogEntry,String> time_col;
+    @FXML
+    private Button delete_log_button;
+    @FXML
+    private Button refresh_log_button;
+
+    @FXML
+    private ListView<String> todoList;
+
+    @FXML
+    private ListView<String> inProgressList;
+
+    @FXML
+    private ListView<String> doneList;
 
     @FXML
     private AnchorPane addEmployee_anchorpane;
@@ -61,6 +97,15 @@ public class AdminHomeController {
 
     @FXML
     private Button users_button;
+
+    ObservableList<LogEntry> data12;
+
+
+    public void setCellValue(){
+        time_col.setCellValueFactory(new PropertyValueFactory<>("timestamp"));
+        description_col.setCellValueFactory(new PropertyValueFactory<>("description"));
+        action_type_col.setCellValueFactory(new PropertyValueFactory<>("actionType"));
+    }
 
     @FXML
     public void setDashboard_anchorpane(){
@@ -122,5 +167,66 @@ public class AdminHomeController {
         stage.setScene(scene);
         stage.show();
     }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        setCellValue();
+        ObservableList<LogEntry> data12 = Main_database_connection.getLogEntry();
+        log_tabel_view.setItems(data12);
+        todoList.getItems().addAll("Task 1", "Task 2", "Task 3");
+
+        // Enable drag-and-drop functionality
+        setupDragAndDrop(todoList, inProgressList);
+        setupDragAndDrop(inProgressList, doneList);
+        setupDragAndDrop(doneList, todoList);
+    }
+    private void setupDragAndDrop(ListView<String> listView, ListView<String> inProgressList) {
+        // Set up drag detection
+        listView.setOnDragDetected(event -> {
+            String selectedItem = listView.getSelectionModel().getSelectedItem();
+            if (selectedItem != null) {
+                Dragboard dragboard = listView.startDragAndDrop(TransferMode.MOVE);
+
+                ClipboardContent content = new ClipboardContent();
+                content.putString(selectedItem);
+                dragboard.setContent(content);
+
+                event.consume();
+            }
+        });
+
+        // Set up drag over
+        listView.setOnDragOver(event -> {
+            if (event.getGestureSource() != listView && event.getDragboard().hasString()) {
+                event.acceptTransferModes(TransferMode.MOVE);
+            }
+            event.consume();
+        });
+
+        // Set up drag dropped
+        listView.setOnDragDropped(event -> {
+            Dragboard dragboard = event.getDragboard();
+            if (dragboard.hasString()) {
+                String draggedItem = dragboard.getString();
+                ListView<String> source = (ListView<String>) event.getGestureSource();
+                source.getItems().remove(draggedItem);
+                listView.getItems().add(draggedItem);
+                event.setDropCompleted(true);
+            } else {
+                event.setDropCompleted(false);
+            }
+            event.consume();
+        });
+
+        // Set up drag done
+        listView.setOnDragDone(event -> event.consume());
+    }
+    public void setDelete_log_button() throws SQLException {
+        Main_database_connection.deleteLog();
+    }
+    public void getnametexxtfield(String name1234){
+
+    }
+
 
 }

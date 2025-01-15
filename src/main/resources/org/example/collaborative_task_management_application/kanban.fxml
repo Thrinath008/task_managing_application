@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" prefHeight="300.0" prefWidth="300.0">
+    <children>
+        <!-- To-Do Column -->
+        <VBox fx:id="todoColumn" layoutX="10.0" layoutY="10.0" prefHeight="280.0" prefWidth="80.0" spacing="10.0" style="-fx-border-color: black; -fx-background-color: #f4f4f4;">
+            <children>
+                <Label text="To-Do" style="-fx-font-weight: bold;" />
+                <ListView fx:id="todoList" prefHeight="200.0" prefWidth="80.0" />
+            </children>
+        </VBox>
+
+        <!-- In Progress Column -->
+        <VBox fx:id="inProgressColumn" layoutX="110.0" layoutY="10.0" prefHeight="280.0" prefWidth="80.0" spacing="10.0" style="-fx-border-color: black; -fx-background-color: #fef9c7;">
+            <children>
+                <Label text="In Progress" style="-fx-font-weight: bold;" />
+                <ListView fx:id="inProgressList" prefHeight="200.0" prefWidth="80.0" />
+            </children>
+        </VBox>
+
+        <!-- Done Column -->
+        <VBox fx:id="doneColumn" layoutX="210.0" layoutY="10.0" prefHeight="280.0" prefWidth="80.0" spacing="10.0" style="-fx-border-color: black; -fx-background-color: #d4edda;">
+            <children>
+                <Label text="Done" style="-fx-font-weight: bold;" />
+                <ListView fx:id="doneList" prefHeight="200.0" prefWidth="80.0" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

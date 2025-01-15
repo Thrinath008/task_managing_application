@@ -1,4 +1,4 @@
-package org.example.collaborative_task_management_application.backend;
+package org.example.collaborative_task_management_application;
 
 public class LogEntry {
     private String actionType;
@@ -21,5 +21,16 @@ public class LogEntry {
 
     public String getTimestamp() {
         return timestamp;
+    }
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setActionType(String actionType) {
+        this.actionType = actionType;
     }
 }

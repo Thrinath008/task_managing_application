@@ -127,7 +127,7 @@ public class LoginScreenController implements Initializable {
         login userLogin = getUserLoginDetails();
         if (Main_database_connection.loginEmployee(id_textfield.getText(),password_field.getText())){
             login_button.getScene().getWindow().hide();
-            if (role_picker.getSelectionModel().getSelectedItem().toString()=="Admin"){
+            if (role_picker.getSelectionModel().getSelectedItem().toString()=="Admin"||role_picker.getSelectionModel().getSelectedItem().toString()=="Manager"){
                 setadminscreen();
                 showAlert(Alert.AlertType.CONFIRMATION,"success","login success");
             }else {
@@ -136,6 +136,7 @@ public class LoginScreenController implements Initializable {
                 Pane root = fxmlLoader.load();
                 HomeScreenController homeScreenController = fxmlLoader.getController();
                 homeScreenController.setName_label(id_textfield.getText());
+                homeScreenController.getpassword(password_field.getText());
 
                 root.setOnMousePressed(event -> {
                     x = event.getSceneX();

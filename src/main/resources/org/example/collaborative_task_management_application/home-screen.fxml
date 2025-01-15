@@ -6,10 +6,10 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -130,11 +130,38 @@
                               </AnchorPane>
                               <AnchorPane fx:id="kanban_anchorpane" prefHeight="569.6" prefWidth="749.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
-                                    <Label layoutX="297.0" layoutY="249.0" text="kanban">
-                                       <font>
-                                          <Font size="48.0" />
-                                       </font>
-                                    </Label>
+                                    <AnchorPane prefHeight="561.6" prefWidth="749.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <HBox layoutX="20.0" layoutY="10.0" prefHeight="510.0" prefWidth="750.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <VBox fx:id="todoColumn" alignment="CENTER" prefHeight="280.0" prefWidth="300.0" spacing="10.0" style="-fx-border-color: black; -fx-background-color: #f4f4f4;">
+                                                   <children>
+                                                      <Label style="-fx-font-weight: bold;" text="To-Do" />
+                                                      <ListView fx:id="todoList" prefHeight="555.0" prefWidth="118.0" />
+                                                   </children>
+                                                </VBox>
+                                                <VBox fx:id="inProgressColumn" alignment="CENTER" prefHeight="280.0" prefWidth="300.0" spacing="10.0" style="-fx-border-color: black; -fx-background-color: #fef9c7;">
+                                                   <children>
+                                                      <Label style="-fx-font-weight: bold;" text="In Progress" />
+                                                      <ListView fx:id="inProgressList" prefHeight="555.0" prefWidth="118.0" />
+                                                   </children>
+                                                </VBox>
+                                                <VBox fx:id="doneColumn" alignment="CENTER" prefHeight="280.0" prefWidth="300.0" spacing="10.0" style="-fx-border-color: black; -fx-background-color: #d4edda;">
+                                                   <children>
+                                                      <Label style="-fx-font-weight: bold;" text="Done" />
+                                                      <ListView fx:id="doneList" prefHeight="555.0" prefWidth="118.0" />
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER" layoutX="126.0" layoutY="514.0" prefHeight="42.0" prefWidth="510.0" spacing="70.0">
+                                             <children>
+                                                <Button fx:id="new_task_button" mnemonicParsing="false" text="new task" />
+                                                <Button fx:id="save_tasks_button" mnemonicParsing="false" prefHeight="38.0" prefWidth="85.0" text="save" />
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </AnchorPane>
                                  </children>
                               </AnchorPane>
                               <AnchorPane fx:id="settings_anchorpane" layoutX="-9.0" prefHeight="569.6" prefWidth="749.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -143,24 +170,46 @@
                                        <left>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <Button layoutX="15.0" layoutY="66.0" mnemonicParsing="false" onAction="#setEdit_details_anchorpane" prefHeight="38.0" prefWidth="173.0" text="Edit profile" />
+                                                <Button fx:id="edit_profile_button" layoutX="15.0" layoutY="66.0" mnemonicParsing="false" onAction="#setEdit_details_anchorpane" prefHeight="38.0" prefWidth="173.0" text="Edit profile" />
                                                 <Button layoutX="13.0" layoutY="150.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="173.0" text="Button" />
                                                 <Button layoutX="15.0" layoutY="242.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="173.0" text="Button" />
                                                 <Button fx:id="delete_account_button" layoutX="35.0" layoutY="510.0" mnemonicParsing="false" onAction="#setDelete_anchorpane" text="Delete Account" />
                                                 <AnchorPane fx:id="delete_anchorpane" layoutX="-1.0" layoutY="303.0" prefHeight="200.0" prefWidth="200.0" visible="false">
                                                    <children>
-                                                      <Button layoutX="14.0" layoutY="148.0" mnemonicParsing="false" text="Button" />
-                                                      <Button layoutX="100.0" layoutY="148.0" mnemonicParsing="false" text="Button" />
-                                                      <TextArea prefHeight="138.0" prefWidth="200.0" />
+                                                      <Button fx:id="revert_button_settings" layoutX="14.0" layoutY="148.0" mnemonicParsing="false" onAction="#setRevert_button_settings" text="revert" />
+                                                      <Button layoutX="114.0" layoutY="148.0" mnemonicParsing="false" text="delete" />
+                                                      <Text layoutX="18.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" are us sure u want to delete the account, this will permantly delete your account" textAlignment="CENTER" wrappingWidth="163.7367172241211">
+                                                         <font>
+                                                            <Font size="18.0" />
+                                                         </font>
+                                                      </Text>
                                                    </children>
                                                 </AnchorPane>
                                              </children>
                                           </AnchorPane>
                                        </left>
                                        <center>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" visible="false" BorderPane.alignment="CENTER">
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <AnchorPane fx:id="edit_details_anchorpane" layoutX="201.0" layoutY="194.0" prefHeight="561.6" prefWidth="549.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                                <AnchorPane fx:id="edit_details_anchorpane" layoutX="201.0" layoutY="194.0" prefHeight="561.6" prefWidth="549.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <children>
+                                                      <VBox layoutX="83.0" layoutY="70.0" prefHeight="454.0" prefWidth="382.0" spacing="10.0" AnchorPane.bottomAnchor="37.19999999999993" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="84.19999999999999" AnchorPane.topAnchor="70.0">
+                                                         <children>
+                                                            <Label text="name:" />
+                                                            <TextField fx:id="name_text_field_edit_profile" />
+                                                            <Label text="email:" />
+                                                            <TextField fx:id="email_textfiled_edit_profile" layoutX="10.0" layoutY="10.0" />
+                                                            <Label text="password" />
+                                                            <TextField fx:id="password_textfiled_edit_profile" layoutX="10.0" layoutY="44.0" />
+                                                            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                                                               <children>
+                                                                  <Button fx:id="clear_fields_button_edit_profile" mnemonicParsing="false" text="clear" />
+                                                                  <Button fx:id="confirm_edit_button_edit_profile" mnemonicParsing="false" text="confirm" />
+                                                               </children>
+                                                            </HBox>
+                                                         </children>
+                                                      </VBox>
+                                                   </children></AnchorPane>
                                                 <AnchorPane fx:id="more_anchorpane" layoutX="10.0" layoutY="10.0" prefHeight="561.6" prefWidth="549.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                 <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="572.0" prefWidth="560.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                              </children></AnchorPane>

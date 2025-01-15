@@ -16,18 +16,14 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("login-screen.fxml"));
         Pane root = fxmlLoader.load();
-
-
         root.setOnMousePressed(event -> {
             x = event.getSceneX();
             y = event.getSceneY();
         });
-
         root.setOnMouseDragged(event -> {
             stage.setX(event.getScreenX() - x);
             stage.setY(event.getScreenY() - y);
         });
-
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("all.css").toExternalForm());
         stage.initStyle(StageStyle.UNDECORATED);

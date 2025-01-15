@@ -1,9 +1,13 @@
 package org.example.collaborative_task_management_application.databases;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import org.example.collaborative_task_management_application.LogEntry;
+
+import java.sql.*;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main_database_connection {
     private static final String URL = "jdbc:mysql://localhost:3306/taskmanager_final";
@@ -11,7 +15,6 @@ public class Main_database_connection {
     private static final String PASSWORD = "CHATgpt@project";
     private static Connection connection;
 
-    // Establish the database connection
     public static Connection connectiondb() {
         if (connection == null) {
             try {
@@ -53,10 +56,9 @@ public class Main_database_connection {
             preparedStatement.setString(1, name); // Set name
             preparedStatement.setString(2, password); // Set password
 
-            // Execute the query
             try (var resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    logAction("login","user "+name+"logged in successfully");
+                    logAction("login","user "+name+" logged in successfully");
                     System.out.println("Login successful! Welcome, " + name + "!");
                     return true;
                 } else {
@@ -96,6 +98,91 @@ public class Main_database_connection {
             System.out.println("error while loged action "+e.getMessage());
         }
     }
+    public static ObservableList<LogEntry> getLogEntry(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy");
+        ObservableList<LogEntry> data = FXCollections.observableArrayList();
+        try (Statement statement = connectiondb().createStatement()){
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM activity_log");
+
+            while (resultSet.next()){
+                String formattedTimestamp = resultSet.getTimestamp("timestamp").toLocalDateTime().format(formatter);
+                data.add(new LogEntry(resultSet.getString("action_type"),
+                        resultSet.getString("description"),formattedTimestamp));
+            }
+            connectiondb().close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return data;
+
+    }
+    public static void deleteLog() throws SQLException {
+        String quary = "TRUNCATE TABLE activity_log";
+        try(PreparedStatement preparedStatement = connectiondb().prepareStatement(quary)){
+            preparedStatement.executeUpdate();
+            System.out.println("all the logs have been deleted successfully!!!!");
+        }
+    }
+
+    public static boolean updateEmployee(int employeeId, String name, String email, String password) {
+        String query = "UPDATE employee SET name = ?, email = ?, password = ? WHERE id = ?";
+        try (PreparedStatement preparedStatement = connectiondb().prepareStatement(query)) {
+            // Set the new values for the employee
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, email);
+            preparedStatement.setString(3, password);
+            preparedStatement.setInt(4, employeeId); // The employee ID to identify which row to update
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                logAction("update employee", "Employee updated with ID: " + employeeId);
+                System.out.println("Employee updated successfully!");
+                return true;
+            } else {
+                System.out.println("No employee found with the given ID: " + employeeId);
+                return false;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error while updating employee: " + e.getMessage());
+            return false;
+        }
+    }
+    public static void saveTasks(String column, List<String> tasks){
+        String deleteQuery = "delete from tasks where column_name = ?";
+        String insertQuery = "insert into tasks(column_name,task_name) values(?,?)";
+        try (PreparedStatement preparedStatement = connectiondb().prepareStatement(deleteQuery);
+        PreparedStatement preparedStatement1 = connectiondb().prepareStatement(insertQuery)){
+            preparedStatement.setString(1,column);
+            preparedStatement.executeUpdate();
+
+            for (String task : tasks){
+                preparedStatement1.setString(1,column);
+                preparedStatement1.setString(2,task);
+                preparedStatement1.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static List<String> getTasks(String column){
+        String qurey = "select task_name from tasks where column_name = ?";
+        List<String> tasks = new ArrayList<>();
+        try (PreparedStatement preparedStatement = connectiondb().prepareStatement(qurey)){
+            preparedStatement.setString(1,column);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                tasks.add(resultSet.getString("task_name"));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return tasks;
+    }
+
 
     public static void main(String[] args) {
         // Test the connection and addEmployee method
