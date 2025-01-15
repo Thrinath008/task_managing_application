@@ -1,0 +1,125 @@
+#signup_button, #login_button {
+    -fx-background-color: linear-gradient(to bottom, #007aff, #005bb5); /* Deep blue gradient */
+    -fx-text-fill: white; /* White text */
+    -fx-font-weight: bold; /* Bold text */
+    -fx-font-size: 10px; /* Clean size */
+    -fx-border-radius: 8px; /* Rounded corners */
+    -fx-background-radius: 8px; /* Match border */
+    -fx-padding: 6px 10px; /* Balanced padding */
+    -fx-cursor: hand; /* Pointer cursor */
+}
+
+#signup_button:hover, #login_button:hover {
+    -fx-background-color: #005bb5; /* Slightly darker on hover */
+}
+
+#signup_button:pressed, #login_button:pressed {
+    -fx-background-color: #003e85; /* Even darker blue when pressed */
+}
+/* style.css */
+
+/* Style specifically for the role_label */
+#role_label {
+    -fx-font-size: 24px; /* Font size */
+    -fx-font-weight: bold; /* Bold text */
+    -fx-text-fill: white; Default text color */
+}
+#exit_button {
+    -fx-background-color: #ff3b30; /* Apple's red color for destructive actions */
+    -fx-text-fill: white; /* White text for contrast */
+    -fx-font-weight: 600; /* Semi-bold text */
+    -fx-font-size: 14px; /* Readable size */
+    -fx-border-radius: 8px; /* Rounded corners */
+    -fx-background-radius: 8px; /* Match border radius */
+    -fx-padding: 6px 12px; /* Balanced padding */
+    -fx-cursor: hand; /* Pointer cursor */
+}
+
+#exit_button:hover {
+    -fx-background-color: #ff453a; /* Slightly lighter red on hover */
+}
+
+#exit_button:pressed {
+    -fx-background-color: #d32f2f; /* Deeper red when pressed */
+}
+.label {
+    -fx-text-fill: "white"; /* Dark gray text */
+    -fx-font-weight: 600; /* Semi-bold for emphasis */
+   -fx-font-size: 16px; /* Readable size */
+   fx-padding: 8px; /* Spacing for clarity */
+}
+.combo-box {
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #f2f2f7); /* Soft gradient */
+    -fx-text-fill: #1c1c1e; /* Dark gray text */
+    -fx-font-weight: 500; /* Medium text weight */
+    -fx-font-size: 12px; /* Compact font size */
+    -fx-border-color: #c7c7cc; /* Light gray border */
+    -fx-border-width: 1px; /* Thin border */
+    -fx-border-radius: 6px; /* Rounded corners */
+    -fx-background-radius: 6px; /* Match the border radius */
+    -fx-padding: 2px; /* Compact padding */
+    -fx-pref-height: 20px; /* Fixed height */
+    -fx-cursor: hand; /* Pointer cursor for interactivity */
+}
+
+/* Focus effect for ComboBox */
+.combo-box:focused {
+    -fx-border-color: #007aff; /* Apple's blue focus color */
+}
+/* ComboBox dropdown */
+.combo-box .list-cell {
+    -fx-background-color: #ffffff; /* Clean white background */
+    -fx-text-fill: #1c1c1e; /* Dark gray text */
+    -fx-font-weight: 400; /* Regular text weight */
+}
+
+.combo-box .list-cell:hover {
+    -fx-background-color: #f2f2f7; /* Subtle hover background */
+}
+
+/* Disabled state */
+.combo-box:disabled {
+    -fx-background-color: #e5e5ea; /* Light gray */
+    -fx-text-fill: #a1a1a6; /* Muted gray text */
+    -fx-border-color: #c7c7cc; /* Light gray border */
+    -fx-cursor: default; /* Default cursor */
+}
+/* Button Style */
+.button {
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #f9f9f9); /* Light neutral gradient */
+    -fx-text-fill: #007aff; /* Apple's blue text color */
+    -fx-font-weight: 600; /* Semi-bold text */
+    -fx-font-size: 14px; /* Clear and concise size */
+    -fx-border-color: #c7c7cc; /* Light gray border */
+    -fx-border-width: 1px; /* Thin, clean border */
+    -fx-border-radius: 10px; /* Rounded corners */
+    -fx-background-radius: 10px; /* Match border radius */
+    -fx-padding: 8px 16px; /* Balanced padding for usability */
+    -fx-cursor: hand; /* Pointer for interactivity */
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #f9f9f9, #f2f2f7); /* Slightly darker hover gradient */
+}
+
+.button:focused {
+    -fx-border-color: #007aff; /* Blue focus border */
+}
+/* TextField Style */
+.text-field {
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #f0f0f5); /* Subtle white gradient */
+    -fx-text-fill: #1c1c1e; /* Dark gray text color */
+    -fx-font-weight: 500; /* Medium text weight */
+    -fx-font-size: 14px; /* Clean, readable size */
+    -fx-border-color: #c7c7cc; /* Neutral gray border */
+    -fx-border-width: 1px; /* Thin, elegant border */
+    -fx-border-radius: 8px; /* Soft rounded corners */
+    -fx-background-radius: 8px; /* Match border radius */
+    -fx-padding: 6px; /* Compact padding for a clean look */
+    -fx-prompt-text-fill: #8e8e93; /* Light gray placeholder text */
+}
+
+.text-field:focused {
+    -fx-border-color: #007aff; /* Apple's iconic blue focus border */
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #f0f0f5); /* Retain gradient */
+}

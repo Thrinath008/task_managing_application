@@ -19,11 +19,5 @@ public class Employee {
     }
 
 
-    public Employee(int id, String name, String email, String phone, String role, String s, int id1, String role1) {
-
-        this.Id = id1;
-        this.role = role1;
-    }
-
     
 }

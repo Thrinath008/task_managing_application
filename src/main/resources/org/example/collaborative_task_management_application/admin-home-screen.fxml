@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.collaborative_task_management_application.AdminHomeController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@org/example/collaborative_task_management_application/alladmin.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.collaborative_task_management_application.AdminHomeController">
     <children>
         <AnchorPane prefHeight="600.0" prefWidth="1000.0">
             <children>
@@ -54,7 +54,7 @@
                                     </children>
                                 </VBox>
                                 <FontAwesomeIcon iconName="USER" layoutX="78.0" layoutY="117.0" size="10em" />
-                                <Button fx:id="logout_button" layoutX="14.0" layoutY="531.0" onAction="#setLoginOut_button" prefHeight="30.0" prefWidth="150.0" text="Logout">
+                                <Button fx:id="logout_button" layoutX="6.0" layoutY="509.0" onAction="#setLoginOut_button" prefHeight="37.0" prefWidth="42.0" AnchorPane.bottomAnchor="7.5" AnchorPane.leftAnchor="7.5">
                                     <graphic>
                                         <FontAwesomeIcon iconName="SIGN_OUT" />
                                     </graphic>
@@ -75,9 +75,9 @@
                     <top>
                         <AnchorPane prefHeight="30.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
                             <children>
-                                <FontAwesomeIcon iconName="USERS" layoutX="4.0" layoutY="22.0" size="1.5em" />
-                                <Label layoutX="31.0" layoutY="6.0" text="Admin Home" />
-                                <Button fx:id="exit_button" layoutX="973.0" layoutY="4.0" onAction="#exit_button_on_action" prefHeight="28.0" prefWidth="39.0">
+                                <FontAwesomeIcon iconName="USERS" layoutX="14.0" layoutY="27.0" size="1.5em" AnchorPane.leftAnchor="7.5" AnchorPane.topAnchor="7.5" />
+                                <Label layoutX="34.0" layoutY="3.0" text="Admin Home" />
+                                <Button fx:id="exit_button" layoutX="959.0" layoutY="8.0" onAction="#exit_button_on_action" prefHeight="28.0" prefWidth="39.0" AnchorPane.rightAnchor="7.5" AnchorPane.topAnchor="7.5">
                                     <graphic>
                                         <FontAwesomeIcon iconName="CLOSE" />
                                     </graphic>
@@ -97,9 +97,44 @@
                                         </Label>
                                     </children>
                                 </AnchorPane>
-                        <AnchorPane fx:id="users_anchorpane" layoutX="310.0" layoutY="140.0" prefHeight="568.0" prefWidth="762.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="users_anchorpane" layoutX="310.0" layoutY="140.0" prefHeight="568.0" prefWidth="762.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Label layoutX="548.0" layoutY="118.0" text="users" />
+                              <BorderPane layoutX="307.0" layoutY="194.0" prefHeight="568.0" prefWidth="762.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <left>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <VBox alignment="CENTER" layoutX="57.0" layoutY="34.0" prefHeight="299.0" prefWidth="200.0" spacing="30.0" AnchorPane.bottomAnchor="260.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <Button fx:id="usersProfiles_button" mnemonicParsing="false" onAction="#setUsers_profile_anchorpane" prefWidth="120.0" text="users proffile" />
+                                                <Button fx:id="addNewEmployee_button" mnemonicParsing="false" onAction="#setAddEmployee_anchorpane" prefHeight="30.0" prefWidth="120.0" text="add emp" />
+                                                <Button fx:id="logs_button" mnemonicParsing="false" onAction="#setLogs_anchorpane" prefHeight="30.0" prefWidth="120.0" text="logs" />
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </left>
+                                 <center>
+                                    <AnchorPane prefHeight="568.0" prefWidth="454.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <AnchorPane fx:id="users_profile_anchorpane" layoutX="81.0" layoutY="123.0" prefHeight="568.0" prefWidth="562.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <Label layoutX="218.0" layoutY="193.0" text="user profile" />
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane fx:id="addEmployee_anchorpane" layoutX="10.0" layoutY="10.0" prefHeight="578.4" prefWidth="572.8" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <Label layoutX="267.0" layoutY="223.0" text="add employee" />
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane fx:id="logs_anchorpane" layoutX="10.0" layoutY="10.0" prefHeight="588.8" prefWidth="584.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <Label layoutX="184.0" layoutY="186.0" text="logs" />
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </AnchorPane>
+                                 </center>
+                              </BorderPane>
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="reports_anchorpane" layoutX="320.0" layoutY="150.0" prefHeight="568.0" prefWidth="762.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="391.0" prefWidth="597.0" stylesheets="@all.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.collaborative_task_management_application.SignInScreenController">
+<AnchorPane prefHeight="391.0" prefWidth="597.0" stylesheets="@loginsign.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.collaborative_task_management_application.SignInScreenController">
    <children>
       <ImageView fitHeight="400.0" fitWidth="600.0" layoutX="-1.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
          <image>

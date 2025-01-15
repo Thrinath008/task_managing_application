@@ -35,6 +35,9 @@ public class Main_database_connection {
             preparedStatement.setString(2, email);
             preparedStatement.setString(3, password);
             int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected >0){
+                logAction("add employee","employee added with email"+email);
+            }
             System.out.println("Employee added successfully!");
             return rowsAffected > 0;
         } catch (SQLException e) {
@@ -53,9 +56,11 @@ public class Main_database_connection {
             // Execute the query
             try (var resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
+                    logAction("login","user "+name+"logged in successfully");
                     System.out.println("Login successful! Welcome, " + name + "!");
                     return true;
                 } else {
+                    logAction("login attempt","failed login attemt for use user: "+name);
                     System.out.println("Invalid name or password. Please try again.");
                     return false;
                 }
@@ -77,6 +82,18 @@ public class Main_database_connection {
             } catch (SQLException e) {
                 System.out.println("Error closing the database connection: " + e.getMessage());
             }
+        }
+    }
+
+    public static void logAction(String actionType, String description){
+        String query = "INSERT INTO activity_log (action_type, description) VALUES (?, ?)";
+        try (PreparedStatement preparedStatement = connectiondb().prepareStatement(query)){
+            preparedStatement.setString(1,actionType);
+            preparedStatement.setString(2,description);
+            preparedStatement.executeUpdate();
+            System.out.println("action logged: "+actionType+"- "+description);
+        } catch (SQLException e) {
+            System.out.println("error while loged action "+e.getMessage());
         }
     }
 

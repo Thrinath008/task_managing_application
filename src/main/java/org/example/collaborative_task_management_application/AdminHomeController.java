@@ -15,6 +15,24 @@ import java.io.IOException;
 public class AdminHomeController {
 
     @FXML
+    private AnchorPane addEmployee_anchorpane;
+
+    @FXML
+    private Button addNewEmployee_button;
+
+    @FXML
+    private AnchorPane logs_anchorpane;
+
+    @FXML
+    private Button logs_button;
+
+    @FXML
+    private Button usersProfiles_button;
+
+    @FXML
+    private AnchorPane users_profile_anchorpane;
+
+    @FXML
     private AnchorPane dashboard_anchorpane;
 
     @FXML
@@ -71,6 +89,24 @@ public class AdminHomeController {
         reports_anchorpane.setVisible(false);
         users_anchorpane.setVisible(true);
         settings_anchorpane.setVisible(false);
+    }
+    @FXML
+    public void setAddEmployee_anchorpane(){
+        addEmployee_anchorpane.setVisible(true);
+        logs_anchorpane.setVisible(false);
+        users_profile_anchorpane.setVisible(false);
+    }
+    @FXML
+    public void setLogs_anchorpane(){
+        addEmployee_anchorpane.setVisible(false);
+        logs_anchorpane.setVisible(true);
+        users_profile_anchorpane.setVisible(false);
+    }
+    @FXML
+    public void setUsers_profile_anchorpane(){
+        addEmployee_anchorpane.setVisible(false);
+        logs_anchorpane.setVisible(false);
+        users_profile_anchorpane.setVisible(true);
     }
     public void exit_button_on_action(ActionEvent event) {
         Stage stage = (Stage)exit_button.getScene().getWindow();

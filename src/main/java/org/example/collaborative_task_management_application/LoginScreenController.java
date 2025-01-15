@@ -102,7 +102,6 @@ public class LoginScreenController implements Initializable {
             if (data=="Manager"){
                 role_label.setText("Captain");
                 System.out.println("hi i am manager");
-                login.print();
             } else if (data=="Admin") {
                 role_label.setText("Admin mawa");
                 System.out.println("hi boss i am Admin");
@@ -113,44 +112,52 @@ public class LoginScreenController implements Initializable {
 
         });
     }
+    public login getUserLoginDetails() {
+        String id = id_textfield.getText();
+        String password = password_field.getText();
+        String role = role_picker.getSelectionModel().getSelectedItem();
+        return new login(id, password, role);
+    }
+
     public void setLogin_button(ActionEvent e) throws IOException {
         if (id_textfield.getText().isEmpty()||password_field.getText().isEmpty()){
             showAlert(Alert.AlertType.WARNING,"error","enter id and password");
-        }else {
-            if (Main_database_connection.loginEmployee(id_textfield.getText(),password_field.getText())){
-                login_button.getScene().getWindow().hide();
-                if (role_picker.getSelectionModel().getSelectedItem().toString()=="Admin"){
-                    setadminscreen();
-                    showAlert(Alert.AlertType.CONFIRMATION,"success","login success");
-                }else {
-                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("home-screen.fxml"));
-                    Stage stage = new Stage();
-                    Pane root = fxmlLoader.load();
-                    HomeScreenController homeScreenController = fxmlLoader.getController();
-                    homeScreenController.setName_label(id_textfield.getText());
-
-                    root.setOnMousePressed(event -> {
-                        x = event.getSceneX();
-                        y = event.getSceneY();
-                    });
-
-                    root.setOnMouseDragged(event -> {
-                        stage.setX(event.getScreenX() - x);
-                        stage.setY(event.getScreenY() - y);
-                    });
-
-                    Scene scene = new Scene(root);
-                    scene.getStylesheets().add(getClass().getResource("all.css").toExternalForm());
-                    stage.initStyle(StageStyle.UNDECORATED);
-                    stage.setScene(scene);
-                    stage.show();
-                    showAlert(Alert.AlertType.CONFIRMATION,"success","login success");
-                }
+            return;
+        }
+        login userLogin = getUserLoginDetails();
+        if (Main_database_connection.loginEmployee(id_textfield.getText(),password_field.getText())){
+            login_button.getScene().getWindow().hide();
+            if (role_picker.getSelectionModel().getSelectedItem().toString()=="Admin"){
+                setadminscreen();
+                showAlert(Alert.AlertType.CONFIRMATION,"success","login success");
             }else {
-                showAlert(Alert.AlertType.ERROR,"invalid info:"," type slowly boy\n try again or signUp");
-                id_textfield.clear();
-                password_field.clear();
+                FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("home-screen.fxml"));
+                Stage stage = new Stage();
+                Pane root = fxmlLoader.load();
+                HomeScreenController homeScreenController = fxmlLoader.getController();
+                homeScreenController.setName_label(id_textfield.getText());
+
+                root.setOnMousePressed(event -> {
+                    x = event.getSceneX();
+                    y = event.getSceneY();
+                });
+
+                root.setOnMouseDragged(event -> {
+                    stage.setX(event.getScreenX() - x);
+                    stage.setY(event.getScreenY() - y);
+                });
+
+                Scene scene = new Scene(root);
+                scene.getStylesheets().add(getClass().getResource("all.css").toExternalForm());
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(scene);
+                stage.show();
+                showAlert(Alert.AlertType.CONFIRMATION,"success","login success");
             }
+        }else {
+            showAlert(Alert.AlertType.ERROR,"invalid info:"," type slowly boy\n try again or signUp");
+            id_textfield.clear();
+            password_field.clear();
         }
     }
     private void showAlert(Alert.AlertType alertType, String title, String message) {
