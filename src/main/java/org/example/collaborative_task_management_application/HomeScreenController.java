@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.example.collaborative_task_management_application.databases.Main_database_connection;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,6 +21,9 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class HomeScreenController implements Initializable {
 
+
+    @FXML
+    private Label name_label;
     @FXML
     private Button exit_button;
     @FXML
@@ -59,9 +63,6 @@ public class HomeScreenController implements Initializable {
 
     @FXML
     private Label messegs_label;
-
-    @FXML
-    private Label name_label;
 
     @FXML
     private AnchorPane project_anchorpane;
@@ -156,17 +157,39 @@ public class HomeScreenController implements Initializable {
     }
     @FXML
     public void setName_label(String username){
-        name_label.setText(username);
         name_text_field_edit_profile.setText(username);
     }
+
+    @FXML
+    public void set_Name_Label(String username){
+        name_label.setText(username);
+    }
+
+    @FXML
+    public void setEmail(String email){
+        email_textfiled_edit_profile.setText(email);
+    }
+
     @FXML
     public void getpassword(String password){
         password_textfiled_edit_profile.setText(password);
     }
+    @FXML
+    private void setalldetails1(){
+        LoginScreenController loginScreenController = new LoginScreenController();
+        login test = loginScreenController.getUserLoginDetails();
+        String password = test.getPassword();
+        String name =test.getId();
+        Employee employee = Main_database_connection.getEmployeeByName(name,password);
+        System.out.println(employee.getName());
+        name_label.setText(employee.getName());
+    }
+
+
+
 
     @Override
+
     public void initialize(URL location, ResourceBundle resources) {
-
-
     }
 }

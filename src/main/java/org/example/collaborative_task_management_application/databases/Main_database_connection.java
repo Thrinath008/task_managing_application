@@ -200,19 +200,38 @@ public class Main_database_connection {
     }
 
     public static boolean insertEmployee(String name, String email, String role, Employee employee, String password) throws SQLException {
-        String sql = "INSERT INTO employee (name, email, role, employeeJson, password) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO employee (employeeId, name, email, role, employeeJson, password) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             Gson gson = new GsonBuilder().excludeFieldsWithModifiers(java.lang.reflect.Modifier.PRIVATE).create();
             String employeeJson = gson.toJson(employee);
-            pstmt.setString(1, name);
-            pstmt.setString(2, email);
-            pstmt.setString(3, role);
-            pstmt.setString(4, employeeJson);
-            pstmt.setString(5,password);
+            pstmt.setInt(1, employee.getId());
+            pstmt.setString(2, name);
+            pstmt.setString(3, email);
+            pstmt.setString(4, role);
+            pstmt.setString(5, employeeJson);
+            pstmt.setString(6,password);
             pstmt.executeUpdate();
             Employee empTest = gson.fromJson(employeeJson,Employee.class);
             System.out.println(empTest.getName());
             return true;
+        }
+    }
+
+    public static Employee getEmployeeByName(String username,String password){
+        String sql = "select employeeJson from employee where name = ? and password = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setString(1,username);
+            pstmt.setString(2, password);
+            ResultSet resultSet = pstmt.executeQuery();
+            if (resultSet.next()) {
+                Gson gson = new GsonBuilder().excludeFieldsWithModifiers(java.lang.reflect.Modifier.PRIVATE).create();
+                return gson.fromJson(resultSet.getString("employeeJson"), Employee.class);
+            } else {
+                System.out.println("No employee found with the given credentials.");
+                return null; // No matching employee
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

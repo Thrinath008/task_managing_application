@@ -3,10 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.StageStyle;
-import org.example.collaborative_task_management_application.backend.*;
 import org.example.collaborative_task_management_application.databases.Main_database_connection;
 
 import javafx.event.ActionEvent;
@@ -119,25 +116,40 @@ public class LoginScreenController implements Initializable {
         return new login(id, password, role);
     }
 
+
     public void setLogin_button(ActionEvent e) throws IOException {
-        if (id_textfield.getText().isEmpty()||password_field.getText().isEmpty()){
-            showAlert(Alert.AlertType.WARNING,"error","enter id and password");
+        // Validate input fields
+        if (id_textfield.getText().isEmpty() || password_field.getText().isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Error", "Enter ID and password.");
             return;
         }
+
+        // Retrieve login details
         login userLogin = getUserLoginDetails();
-        if (Main_database_connection.loginEmployee(id_textfield.getText(),password_field.getText())){
+
+        // Attempt login
+        if (Main_database_connection.loginEmployee(id_textfield.getText(), password_field.getText())) {
             login_button.getScene().getWindow().hide();
-            if (role_picker.getSelectionModel().getSelectedItem().toString()=="Admin"||role_picker.getSelectionModel().getSelectedItem().toString()=="Manager"){
+
+            String selectedRole = role_picker.getSelectionModel().getSelectedItem();
+            if ("Admin".equals(selectedRole) || "Manager".equals(selectedRole)) {
                 setadminscreen();
-                showAlert(Alert.AlertType.CONFIRMATION,"success","login success");
-            }else {
+                showAlert(Alert.AlertType.CONFIRMATION, "Success", "Login successful!");
+            } else {
+                // Load the home screen
                 FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("home-screen.fxml"));
                 Stage stage = new Stage();
                 Pane root = fxmlLoader.load();
+
+                // Pass login details to HomeScreenController
                 HomeScreenController homeScreenController = fxmlLoader.getController();
                 homeScreenController.setName_label(id_textfield.getText());
                 homeScreenController.getpassword(password_field.getText());
+                homeScreenController.set_Name_Label(id_textfield.getText());
+                Employee employee = Main_database_connection.getEmployeeByName(id_textfield.getText(),password_field.getText());
+                homeScreenController.setEmail(employee.getEmail());
 
+                // Make the window draggable
                 root.setOnMousePressed(event -> {
                     x = event.getSceneX();
                     y = event.getSceneY();
@@ -148,19 +160,23 @@ public class LoginScreenController implements Initializable {
                     stage.setY(event.getScreenY() - y);
                 });
 
+                // Display the home screen
                 Scene scene = new Scene(root);
                 scene.getStylesheets().add(getClass().getResource("all.css").toExternalForm());
                 stage.initStyle(StageStyle.UNDECORATED);
                 stage.setScene(scene);
                 stage.show();
-                showAlert(Alert.AlertType.CONFIRMATION,"success","login success");
+
+                showAlert(Alert.AlertType.CONFIRMATION, "Success", "Login successful!");
             }
-        }else {
-            showAlert(Alert.AlertType.ERROR,"invalid info:"," type slowly boy\n try again or signUp");
+        } else {
+            // Invalid login credentials
+            showAlert(Alert.AlertType.ERROR, "Invalid Info", "Type slowly.\nTry again or sign up.");
             id_textfield.clear();
             password_field.clear();
         }
     }
+
     private void showAlert(Alert.AlertType alertType, String title, String message) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);

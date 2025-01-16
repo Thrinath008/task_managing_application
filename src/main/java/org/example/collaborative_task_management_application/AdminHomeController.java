@@ -227,6 +227,15 @@ public class AdminHomeController implements Initializable {
     public void getnametexxtfield(String name1234){
 
     }
+    @FXML
+    private void setalldetails(){
+        LoginScreenController loginScreenController = new LoginScreenController();
+        login test = loginScreenController.getUserLoginDetails();
+        String password = test.getPassword();
+        String name =test.getId();
+        Employee employee = Main_database_connection.getEmployeeByName(name,password);
+        System.out.println(employee.getName());
+    }
 
 
 }

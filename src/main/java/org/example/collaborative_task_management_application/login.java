@@ -1,4 +1,4 @@
-package org.example.collaborative_task_management_application.backend;
+package org.example.collaborative_task_management_application;
 
 public class login {
     private String Id;
