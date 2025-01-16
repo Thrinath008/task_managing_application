@@ -7,10 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
@@ -22,8 +19,11 @@ import org.example.collaborative_task_management_application.databases.Main_data
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 public class AdminHomeController implements Initializable {
 
@@ -40,6 +40,8 @@ public class AdminHomeController implements Initializable {
     private Button delete_log_button;
     @FXML
     private Button refresh_log_button;
+    @FXML
+    private TextField new_task_fiels;
 
     @FXML
     private ListView<String> todoList;
@@ -94,7 +96,10 @@ public class AdminHomeController implements Initializable {
 
     @FXML
     private AnchorPane users_anchorpane;
-
+    @FXML
+    private Button new_task_button;
+    @FXML
+    private Button save_tasks_button;
     @FXML
     private Button users_button;
 
@@ -173,20 +178,50 @@ public class AdminHomeController implements Initializable {
         setCellValue();
         ObservableList<LogEntry> data12 = Main_database_connection.getLogEntry();
         log_tabel_view.setItems(data12);
-        todoList.getItems().addAll("Task 1", "Task 2", "Task 3");
+        Set<String> taskName = new HashSet<String>();
+        try {
+            Main_database_connection db = new Main_database_connection();
+            ResultSet resultSet = db.selectTasks();
+            Set<String> todoListItems = new HashSet<String>();
+            Set<String> progressItems = new HashSet<String>();
+            Set<String> doneItems = new HashSet<String>();
+            while(resultSet.next()){
+                String columnName = resultSet.getString("column_name");
+                System.out.println(columnName);
+                if(columnName.equals("To-Do")){
+                    todoListItems.add(resultSet.getInt("id")+" - "+ resultSet.getString("task_name"));
+                }
+                else if(columnName.equals("In Progress")){
+                    progressItems.add(resultSet.getInt("id")+" - "+ resultSet.getString("task_name"));
+                }
+                else if(columnName.equals("Done")){
+                    doneItems.add(resultSet.getInt("id")+" - "+ resultSet.getString("task_name"));
+                }
+            }
+            todoList.getItems().addAll(todoListItems);
+            inProgressList.getItems().addAll(progressItems);
+            doneList.getItems().addAll(doneItems);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
 
         // Enable drag-and-drop functionality
         setupDragAndDrop(todoList, inProgressList);
         setupDragAndDrop(inProgressList, doneList);
         setupDragAndDrop(doneList, todoList);
     }
-    private void setupDragAndDrop(ListView<String> listView, ListView<String> inProgressList) {
+    String draggedItem;
+    String targetColumn;
+    private void setupDragAndDrop(ListView<String> listView, ListView<String> targetList) {
         // Set up drag detection
         listView.setOnDragDetected(event -> {
             String selectedItem = listView.getSelectionModel().getSelectedItem();
             if (selectedItem != null) {
+                // Start drag-and-drop gesture
                 Dragboard dragboard = listView.startDragAndDrop(TransferMode.MOVE);
 
+                // Put the selected item into the dragboard
                 ClipboardContent content = new ClipboardContent();
                 content.putString(selectedItem);
                 dragboard.setContent(content);
@@ -195,22 +230,30 @@ public class AdminHomeController implements Initializable {
             }
         });
 
-        // Set up drag over
-        listView.setOnDragOver(event -> {
-            if (event.getGestureSource() != listView && event.getDragboard().hasString()) {
+        // Set up drag over for the target list
+        targetList.setOnDragOver(event -> {
+            // Accept the drag only if it's coming from a different source
+            if (event.getGestureSource() != targetList && event.getDragboard().hasString()) {
                 event.acceptTransferModes(TransferMode.MOVE);
             }
             event.consume();
         });
 
         // Set up drag dropped
-        listView.setOnDragDropped(event -> {
+        targetList.setOnDragDropped(event -> {
             Dragboard dragboard = event.getDragboard();
             if (dragboard.hasString()) {
-                String draggedItem = dragboard.getString();
-                ListView<String> source = (ListView<String>) event.getGestureSource();
-                source.getItems().remove(draggedItem);
-                listView.getItems().add(draggedItem);
+                draggedItem = dragboard.getString();
+                targetColumn = getSimpleColumnName(targetList);
+                // Log the drag-and-drop operation
+                System.out.println("Item dragged: " + draggedItem);
+                System.out.println("Source column: " + getSimpleColumnName(listView));
+                System.out.println("Target column: " + getSimpleColumnName(targetList));
+
+                // Remove the item from the source list and add it to the target list
+                listView.getItems().remove(draggedItem);
+                targetList.getItems().add(draggedItem);
+
                 event.setDropCompleted(true);
             } else {
                 event.setDropCompleted(false);
@@ -221,12 +264,65 @@ public class AdminHomeController implements Initializable {
         // Set up drag done
         listView.setOnDragDone(event -> event.consume());
     }
+
+    private String getSimpleColumnName(ListView<String> listView) {
+        if (listView == todoList) return "To-Do";
+        if (listView == inProgressList) return "In Progress";
+        if (listView == doneList) return "Done";
+        return "Unknown";
+    }
+
     public void setDelete_log_button() throws SQLException {
         Main_database_connection.deleteLog();
     }
+    @FXML
     public void getnametexxtfield(String name1234){
 
+
     }
+    @FXML void gettasks(){
+
+    }
+    @FXML
+    public void setNew_task_button(){
+        String new_task= new_task_fiels.getText();
+        try {
+            Task task = new Task(new_task);
+            task.createTask(task);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        Set<String> taskName = new HashSet<String>();
+        try {
+            Main_database_connection db = new Main_database_connection();
+            ResultSet resultSet = db.selectTasks();
+            while(resultSet.next()){
+                taskName.add(resultSet.getInt("id")+" - "+ resultSet.getString("task_name"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        todoList.getItems().clear();
+        todoList.getItems().addAll(taskName);
+    }
+
+    @FXML
+    public void save_button_onclick(){
+        String[] result = draggedItem.split("\\s*-\\s*", 2);
+
+        int numberPart;
+        String textPart;
+
+        if (result.length == 2) {
+            numberPart = Integer.parseInt(result[0].trim());
+            textPart = result[1].trim();
+            Task.updateTaskStatus(numberPart,targetColumn);
+        }
+
+
+
+    }
+
     @FXML
     private void setalldetails(){
         LoginScreenController loginScreenController = new LoginScreenController();

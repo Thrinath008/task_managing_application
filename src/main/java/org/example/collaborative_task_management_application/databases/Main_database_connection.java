@@ -11,6 +11,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import com.google.gson.Gson;
+import org.example.collaborative_task_management_application.Project;
+import org.example.collaborative_task_management_application.Task;
 
 public class Main_database_connection {
     private static final String URL = "jdbc:mysql://localhost:3306/taskmanager_final";
@@ -213,6 +215,7 @@ public class Main_database_connection {
             pstmt.executeUpdate();
             Employee empTest = gson.fromJson(employeeJson,Employee.class);
             System.out.println(empTest.getName());
+            logAction("sign up",employee.getId()+" "+employee.getName()+" added user to database");
             return true;
         }
     }
@@ -234,4 +237,161 @@ public class Main_database_connection {
             throw new RuntimeException(e);
         }
     }
+
+    //#######################################Project Methods################################
+    public void insertProject(int id, String name, String description, Date startDate, Date endDate, float budget, String status, Project project) throws SQLException {
+        String sql = "INSERT INTO project (projectId, description, startDate, endDate, budget, status, projectJSON, name) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            Gson gson = new GsonBuilder().excludeFieldsWithModifiers(java.lang.reflect.Modifier.PRIVATE).create();
+            String projectJSON = gson.toJson(project);
+            pstmt.setInt(1, id);
+            pstmt.setString(2, description);
+            pstmt.setDate(3, startDate);
+            pstmt.setDate(4, endDate);
+            pstmt.setFloat(5, budget);
+            pstmt.setString(6, status);
+            pstmt.setString(7, projectJSON);
+            pstmt.setString(8, name);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public ResultSet selectAllProjects() throws SQLException {
+        String sql = "SELECT * FROM project";
+        Statement stmt = connection.createStatement();
+        return stmt.executeQuery(sql);
+    }
+
+    public Project selectParticularProject(int projectId){
+        String sql = "SELECT FROM project WHERE projectId =?";
+        try{
+            Gson gson = new GsonBuilder().excludeFieldsWithModifiers(java.lang.reflect.Modifier.PRIVATE).create();
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1,projectId);
+            ResultSet resultSet = pstmt.executeQuery();
+            return gson.fromJson(resultSet.getString("projectJSON"), Project.class);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateProject(int projectId, String description, Date endDate, String status, Project project, String name) throws SQLException {
+        String sql = "UPDATE project SET description = ?, endDate = ?, status = ?, projectJSON = ?, name =? WHERE projectId = ?";
+        try {
+            Gson gson = new GsonBuilder().excludeFieldsWithModifiers(java.lang.reflect.Modifier.PRIVATE).create();
+            String projectJson = gson.toJson(project);
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, description);
+            pstmt.setDate(2,endDate);
+            pstmt.setString(3, status);
+            pstmt.setString(4, projectJson);
+            pstmt.setString(5, name);
+            pstmt.setInt(6, projectId);
+            pstmt.executeUpdate();
+        }catch(SQLException e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateProjectJSON(int projectId,Project project) throws SQLException {
+        String sql = "UPDATE project SET projectJSON = ? WHERE projectId = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            Gson gson = new GsonBuilder().excludeFieldsWithModifiers(java.lang.reflect.Modifier.PRIVATE).create();
+            String projectJson = gson.toJson(project);
+            pstmt.setString(1, projectJson);
+            pstmt.setInt(2, projectId);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void deleteProject(int projectId) throws SQLException {
+        String sql = "DELETE FROM Project WHERE projectId = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, projectId);
+            pstmt.executeUpdate();
+        }
+    }
+
+
+    // ============================== TASK METHODS ===============================
+    public void insertTask(int taskId, String task_name, int assignedEmployeeId, Task task) throws SQLException {
+        String sql = "INSERT INTO tasks (id, column_name, task_name, assignedEmployeeId, taskJSON) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            Gson gson = new GsonBuilder().excludeFieldsWithModifiers(java.lang.reflect.Modifier.PRIVATE).create();
+            String taskJSON = gson.toJson(task);
+            String column_name = "To-Do";
+            pstmt.setInt(1, taskId);
+            pstmt.setString(2, column_name);
+            pstmt.setString(3, task_name);
+            pstmt.setInt(4, assignedEmployeeId);
+            pstmt.setString(5, taskJSON);
+            pstmt.executeUpdate();
+            logAction("Task Added", task.getTitle() + " with task id " + task.getTaskId()+ " added ");
+        }
+    }
+
+    public ResultSet selectTasks() throws SQLException {
+        String sql = "SELECT * FROM tasks";
+        Statement stmt = connection.createStatement();
+        return stmt.executeQuery(sql);
+    }
+
+    public void updateTaskStatus(int taskId, String newStatus, Task task) throws SQLException {
+        String sql = "UPDATE tasks SET column_name = ?, taskJSON = ?  WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            Gson gson = new GsonBuilder().excludeFieldsWithModifiers(java.lang.reflect.Modifier.PRIVATE).create();
+            String taskJSON = gson.toJson(task);
+            pstmt.setString(1, newStatus);
+            pstmt.setString(2, taskJSON);
+            pstmt.setInt(3, taskId);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void updateTaskDetails(int taskId, String title, int assignedEmployeeId, Task task) {
+        String sql = "UPDATE tasks SET task_name = ?, assignedEmployeeId = ?, taskJSON = ? WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            Gson gson = new GsonBuilder().excludeFieldsWithModifiers(java.lang.reflect.Modifier.PRIVATE).create();;
+            String taskJSON = gson.toJson(task);
+            pstmt.setString(1, title);
+            pstmt.setInt(2, assignedEmployeeId);
+            pstmt.setString(3, taskJSON);
+            pstmt.setInt(4, taskId);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteTask(int taskId) throws SQLException {
+        String sql = "DELETE FROM tasks WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, taskId);
+            pstmt.executeUpdate();
+        }
+    }
+
+    public Task getTaskJson(int taskId) {
+        String sql = "SELECT * FROM tasks WHERE id = ?";
+        try {
+            Gson gson = new GsonBuilder().excludeFieldsWithModifiers(java.lang.reflect.Modifier.PRIVATE).create();
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            pstmt.setInt(1,taskId);
+            ResultSet resultSet = pstmt.executeQuery();
+            if (resultSet.next()) {
+                // Retrieve the JSON string from the "taskJSON" column
+                String taskJson = resultSet.getString("taskJSON");
+
+                // Convert the JSON string to a Task object and return it
+                return gson.fromJson(taskJson, Task.class);
+            } else {
+                // Handle case where no task is found for the given ID
+                throw new RuntimeException("No task found with ID: " + taskId);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 }

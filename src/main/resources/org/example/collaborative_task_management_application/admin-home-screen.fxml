@@ -6,6 +6,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -112,7 +113,7 @@
                                        <children>
                                           <AnchorPane layoutX="-7.0" prefHeight="562.0" prefWidth="523.0">
                                              <children>
-                                                <HBox layoutX="20.0" layoutY="10.0" prefHeight="510.0" prefWidth="596.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="41.0" AnchorPane.topAnchor="0.0">
+                                                <HBox layoutX="20.0" layoutY="10.0" prefHeight="424.0" prefWidth="523.0" AnchorPane.bottomAnchor="138.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
                                                       <VBox fx:id="todoColumn" alignment="CENTER" prefHeight="280.0" prefWidth="200.0" spacing="10.0" style="-fx-border-color: black; -fx-background-color: #f4f4f4;">
                                                          <children>
@@ -136,10 +137,11 @@
                                                 </HBox>
                                                 <HBox alignment="CENTER" layoutX="33.0" layoutY="510.0" prefHeight="42.0" prefWidth="457.0" spacing="70.0">
                                                    <children>
-                                                      <Button fx:id="new_task_button" mnemonicParsing="false" text="new task" />
-                                                      <Button fx:id="save_tasks_button" mnemonicParsing="false" prefHeight="38.0" prefWidth="85.0" text="save" />
+                                                      <Button fx:id="new_task_button" mnemonicParsing="false" onAction="#setNew_task_button" text="new task" />
+                                                      <Button fx:id="save_tasks_button" mnemonicParsing="false" onAction="#save_button_onclick" prefHeight="38.0" prefWidth="85.0" text="save" />
                                                    </children>
                                                 </HBox>
+                                                <TextField fx:id="new_task_fiels" layoutX="113.0" layoutY="454.0" />
                                              </children>
                                           </AnchorPane>
                                        </children></AnchorPane>

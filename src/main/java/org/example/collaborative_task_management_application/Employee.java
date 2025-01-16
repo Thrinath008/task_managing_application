@@ -1,6 +1,5 @@
 package org.example.collaborative_task_management_application;
 
-import org.example.collaborative_task_management_application.backend.Project;
 import org.example.collaborative_task_management_application.databases.Main_database_connection;
 
 import java.sql.Connection;
