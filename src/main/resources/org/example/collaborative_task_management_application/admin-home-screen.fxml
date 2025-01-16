@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -94,17 +95,17 @@
                     <center>
                         <AnchorPane prefHeight="584.0" prefWidth="750.0" BorderPane.alignment="CENTER">
                             <children>
-                                <AnchorPane fx:id="dashboard_anchorpane" prefHeight="579.2" prefWidth="750.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <AnchorPane fx:id="dashboard_anchorpane" prefHeight="579.2" prefWidth="750.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <BorderPane layoutX="143.0" layoutY="80.0" prefHeight="559.2" prefWidth="749.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <left>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <AnchorPane prefHeight="562.4" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <AnchorPane layoutX="-6.0" prefHeight="562.4" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
                                              <children>
-                                                <Button layoutX="62.0" layoutY="62.0" mnemonicParsing="false" text="team" />
-                                                <Button layoutX="62.0" layoutY="158.0" mnemonicParsing="false" text="Button" />
-                                                <Button layoutX="62.0" layoutY="243.0" mnemonicParsing="false" text="Button" />
+                                                <Button layoutX="50.0" layoutY="153.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="100.0" text="team" />
+                                                <Button fx:id="kanBanview_button" layoutX="50.0" layoutY="87.0" mnemonicParsing="false" onAction="#setKanBan_anchorpane" prefWidth="100.0" text="kanBan" />
+                                                <Button layoutX="50.0" layoutY="223.0" mnemonicParsing="false" prefWidth="100.0" text="projects" />
                                              </children>
                                           </AnchorPane>
                                        </children></AnchorPane>
@@ -112,9 +113,9 @@
                                  <center>
                                     <AnchorPane prefHeight="562.0" prefWidth="561.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <AnchorPane layoutX="-7.0" prefHeight="562.0" prefWidth="523.0">
+                                          <AnchorPane fx:id="kanBan_anchorpane" layoutX="-7.0" prefHeight="562.0" prefWidth="523.0" visible="false">
                                              <children>
-                                                <HBox layoutX="20.0" layoutY="10.0" prefHeight="424.0" prefWidth="523.0" AnchorPane.bottomAnchor="138.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                <HBox layoutX="20.0" layoutY="36.0" prefHeight="388.0" prefWidth="523.0" AnchorPane.bottomAnchor="138.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="36.0">
                                                    <children>
                                                       <VBox fx:id="todoColumn" alignment="CENTER" prefHeight="280.0" prefWidth="200.0" spacing="10.0" style="-fx-border-color: black; -fx-background-color: #f4f4f4;">
                                                          <children>
@@ -142,7 +143,8 @@
                                                       <Button fx:id="save_tasks_button" mnemonicParsing="false" onAction="#save_button_onclick" prefHeight="38.0" prefWidth="85.0" text="save" />
                                                    </children>
                                                 </HBox>
-                                                <TextField fx:id="new_task_fiels" layoutX="113.0" layoutY="454.0" />
+                                                <TextField fx:id="new_task_fiels" layoutX="176.0" layoutY="459.0" />
+                                                <Text layoutX="222.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="enter new task :" />
                                              </children>
                                           </AnchorPane>
                                        </children></AnchorPane>
@@ -236,6 +238,9 @@
                         </AnchorPane>
                     </center>
                 </BorderPane>
+            <Line endX="203.1999969482422" endY="38.39999771118164" startX="19.999988555908203" startY="38.39999771118164" />
+            <Line endX="939.9999389648438" endY="40.092899322509766" startX="290.4000244140625" startY="40.092899322509766" />
+            <Line endX="244.09288024902344" endY="541.6000366210938" startX="244.09288024902344" startY="81.59999084472656" />
             </children>
         </AnchorPane>
     </children>

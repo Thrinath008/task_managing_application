@@ -30,6 +30,10 @@ public class AdminHomeController implements Initializable {
     @FXML
     private TableView<LogEntry> log_tabel_view;
     @FXML
+    private Button kanBanview_button;
+    @FXML
+    private AnchorPane kanBan_anchorpane;
+    @FXML
     private TableColumn<LogEntry,String> action_type_col;
     @FXML
     private TableColumn<LogEntry,String> description_col;
@@ -124,6 +128,10 @@ public class AdminHomeController implements Initializable {
     private Button users_button;
 
     ObservableList<LogEntry> data12;
+    @FXML
+    private void setKanBan_anchorpane(){
+        kanBan_anchorpane.setVisible(true);
+    }
 
 
     public void setCellValue(){

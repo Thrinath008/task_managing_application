@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -19,6 +20,9 @@
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" stylesheets="@all.css">
          <children>
+            <Line endX="203.1999969482422" endY="38.39999771118164" startX="19.999988555908203" startY="38.39999771118164" />
+            <Line endX="939.9999389648438" endY="40.092899322509766" startX="290.4000244140625" startY="40.092899322509766" />
+            <Line endX="244.09288024902344" endY="541.6000366210938" startX="244.09288024902344" startY="81.59999084472656" />
             <BorderPane layoutX="321.0" layoutY="189.0" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <left>
                   <AnchorPane prefHeight="570.0" prefWidth="250.0" BorderPane.alignment="CENTER">
@@ -79,8 +83,11 @@
                <top>
                   <AnchorPane prefHeight="30.0" prefWidth="800.0" BorderPane.alignment="CENTER">
                      <children>
-                        <FontAwesomeIcon iconName="USERS" layoutX="4.0" layoutY="22.0" size="1.5em" />
-                        <Label layoutX="31.0" layoutY="6.0" text="Employee home" />
+                        <FontAwesomeIcon iconName="USERS" layoutX="14.0" layoutY="27.0" size="2em" />
+                        <Label layoutX="52.0" layoutY="8.0" text="Employee home">
+                           <font>
+                              <Font size="14.0" />
+                           </font></Label>
                         <Button fx:id="exit_button" layoutX="973.0" layoutY="4.0" mnemonicParsing="false" onAction="#exit" prefHeight="28.0" prefWidth="39.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                            <graphic>
                               <FontAwesomeIcon iconName="CLOSE" />
@@ -128,11 +135,11 @@
                                     </BorderPane>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane fx:id="kanban_anchorpane" prefHeight="569.6" prefWidth="749.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <AnchorPane fx:id="kanban_anchorpane" prefHeight="569.6" prefWidth="749.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <AnchorPane prefHeight="561.6" prefWidth="749.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <HBox layoutX="20.0" layoutY="10.0" prefHeight="461.0" prefWidth="697.0" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="53.0" AnchorPane.topAnchor="0.0">
+                                          <HBox layoutX="35.2" layoutY="32.0" prefHeight="429.0" prefWidth="662.0" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="35.0" AnchorPane.rightAnchor="53.0" AnchorPane.topAnchor="32.0">
                                              <children>
                                                 <VBox fx:id="todoColumn" alignment="CENTER" prefHeight="280.0" prefWidth="300.0" spacing="10.0" style="-fx-border-color: black; -fx-background-color: #f4f4f4;">
                                                    <children>
@@ -165,17 +172,16 @@
                                     </AnchorPane>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane fx:id="settings_anchorpane" layoutX="-9.0" prefHeight="569.6" prefWidth="749.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <AnchorPane fx:id="settings_anchorpane" layoutX="-9.0" prefHeight="569.6" prefWidth="749.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <BorderPane layoutX="309.0" layoutY="169.0" prefHeight="561.6" prefWidth="749.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <left>
                                           <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                              <children>
                                                 <Button fx:id="edit_profile_button" layoutX="15.0" layoutY="66.0" mnemonicParsing="false" onAction="#setEdit_details_anchorpane" prefHeight="38.0" prefWidth="173.0" text="Edit profile" />
-                                                <Button layoutX="13.0" layoutY="150.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="173.0" text="Button" />
-                                                <Button layoutX="15.0" layoutY="242.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="173.0" text="Button" />
-                                                <Button fx:id="delete_account_button" layoutX="35.0" layoutY="510.0" mnemonicParsing="false" onAction="#setDelete_anchorpane" text="Delete Account" />
-                                                <AnchorPane fx:id="delete_anchorpane" layoutX="-1.0" layoutY="303.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+                                                <Button layoutX="13.0" layoutY="150.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="173.0" text="report bug" />
+                                                <Button fx:id="delete_account_button" layoutX="35.0" layoutY="465.0" mnemonicParsing="false" onAction="#setDelete_anchorpane" text="Delete Account" />
+                                                <AnchorPane fx:id="delete_anchorpane" layoutY="244.0" prefHeight="200.0" prefWidth="200.0" visible="false">
                                                    <children>
                                                       <Button fx:id="revert_button_settings" layoutX="14.0" layoutY="148.0" mnemonicParsing="false" onAction="#setRevert_button_settings" text="revert" />
                                                       <Button layoutX="114.0" layoutY="148.0" mnemonicParsing="false" text="delete" />

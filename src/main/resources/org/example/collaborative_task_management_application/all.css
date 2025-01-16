@@ -93,7 +93,7 @@
 .label {
     -fx-text-fill: "black"; /* Dark gray text */
     -fx-font-weight: 600; /* Semi-bold for emphasis */
-   -fx-font-size: 16px; /* Readable size */
+    /* Readable size */
    fx-padding: 8px; /* Spacing for clarity */
 }
 
@@ -166,3 +166,54 @@
     -fx-font-weight: bold; /* Bold text */
     -fx-text-fill: white; Default text color */
 }
+
+
+
+/* ListView Styling */
+.list-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 5;
+    -fx-cell-size: 30; /* Keeps the default cell size */
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+/* ListView Cell Styling */
+.list-view .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent;
+    -fx-padding: 8;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #f5f5f5;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color: #007aff;
+    -fx-text-fill: #ffffff;
+}
+
+/* Scroll Bar Styling for ListView */
+.list-view .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.list-view .scroll-bar .thumb {
+    -fx-background-color: #d9d9d9;
+    -fx-background-radius: 6;
+}
+
+.list-view .scroll-bar .thumb:hover {
+    -fx-background-color: #bfbfbf;
+}
+
+.list-view .scroll-bar .thumb:pressed {
+    -fx-background-color: #a6a6a6;
+}
+
