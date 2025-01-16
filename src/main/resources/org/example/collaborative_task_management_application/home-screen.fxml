@@ -132,7 +132,7 @@
                                  <children>
                                     <AnchorPane prefHeight="561.6" prefWidth="749.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
-                                          <HBox layoutX="20.0" layoutY="10.0" prefHeight="510.0" prefWidth="750.0" AnchorPane.bottomAnchor="52.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <HBox layoutX="20.0" layoutY="10.0" prefHeight="461.0" prefWidth="697.0" AnchorPane.bottomAnchor="101.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="53.0" AnchorPane.topAnchor="0.0">
                                              <children>
                                                 <VBox fx:id="todoColumn" alignment="CENTER" prefHeight="280.0" prefWidth="300.0" spacing="10.0" style="-fx-border-color: black; -fx-background-color: #f4f4f4;">
                                                    <children>
@@ -154,10 +154,11 @@
                                                 </VBox>
                                              </children>
                                           </HBox>
-                                          <HBox alignment="CENTER" layoutX="126.0" layoutY="514.0" prefHeight="42.0" prefWidth="510.0" spacing="70.0">
+                                          <HBox alignment="CENTER" layoutX="14.0" layoutY="490.0" prefHeight="42.0" prefWidth="598.0" spacing="70.0">
                                              <children>
-                                                <Button fx:id="new_task_button" mnemonicParsing="false" text="new task" />
-                                                <Button fx:id="save_tasks_button" mnemonicParsing="false" prefHeight="38.0" prefWidth="85.0" text="save" />
+                                                <TextField fx:id="new_task_fiels" />
+                                                <Button fx:id="new_task_button" mnemonicParsing="false" onAction="#setNew_task_button" text="new task" />
+                                                <Button fx:id="save_tasks_button" mnemonicParsing="false" onAction="#save_button_onclick" prefHeight="38.0" prefWidth="85.0" text="save" />
                                              </children>
                                           </HBox>
                                        </children>

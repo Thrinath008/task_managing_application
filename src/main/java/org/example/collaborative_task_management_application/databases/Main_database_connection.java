@@ -10,6 +10,8 @@ import java.sql.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import com.google.gson.Gson;
 import org.example.collaborative_task_management_application.Project;
 import org.example.collaborative_task_management_application.Task;
@@ -238,6 +240,32 @@ public class Main_database_connection {
         }
     }
 
+    public static ObservableList<Employee> selectParticularEmployee(){
+        String sql = "SELECT * FROM employee";
+        ObservableList<Employee> empLiast = FXCollections.observableArrayList();
+        try(Statement statement = connectiondb().createStatement()){
+            ResultSet resultSet = statement.executeQuery(sql);
+            while(resultSet.next()){
+                empLiast.add(new Employee(resultSet.getInt("employeeId"),resultSet.getString("name")));
+            }
+//            connectiondb().close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return empLiast;
+    }
+    public static ObservableList<Task> getTasksForTabel() throws SQLException {
+        String sql = "select * from tasks";
+        ObservableList<Task> tasks = FXCollections.observableArrayList();
+        try (Statement statement = connectiondb().createStatement()){
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()){
+                tasks.add(new Task(resultSet.getInt("id"),resultSet.getString("task_name"), resultSet.getInt("assignedEmployeeId")));
+            }
+        }
+        return tasks;
+    }
+
     //#######################################Project Methods################################
     public void insertProject(int id, String name, String description, Date startDate, Date endDate, float budget, String status, Project project) throws SQLException {
         String sql = "INSERT INTO project (projectId, description, startDate, endDate, budget, status, projectJSON, name) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -345,6 +373,7 @@ public class Main_database_connection {
             pstmt.setString(2, taskJSON);
             pstmt.setInt(3, taskId);
             pstmt.executeUpdate();
+            logAction("upDated","task has changed to "+newStatus);
         }
     }
 
@@ -358,6 +387,7 @@ public class Main_database_connection {
             pstmt.setString(3, taskJSON);
             pstmt.setInt(4, taskId);
             pstmt.executeUpdate();
+            logAction("upDated","task has changed to "+title+" by "+assignedEmployeeId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

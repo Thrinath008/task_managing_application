@@ -86,6 +86,11 @@ public class Task {
             throw new RuntimeException("Error updating task", e);
         }
     }
+    public Task(int id,String title,int assignedEmployeeId){
+        this.taskId = id;
+        this.title = title;
+        this.assignedEmployeeId = assignedEmployeeId;
+    }
 
     public void assignEmployee(int employeeId) {
         this.assignedEmployeeId = employeeId;

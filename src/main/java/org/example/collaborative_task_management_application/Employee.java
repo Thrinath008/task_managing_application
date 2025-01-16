@@ -36,6 +36,12 @@ public class Employee {
         this.role = role;
         List<Project> assignedProjects = new ArrayList<>();
     }
+
+    public Employee(int id, String name) {
+        this.Id = id;
+        this.name = name;
+    }
+
     public int getId() {
         return Id;
     }

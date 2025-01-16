@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" stylesheets="@org/example/collaborative_task_management_application/alladmin.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.collaborative_task_management_application.AdminHomeController">
     <children>
@@ -175,7 +176,31 @@
                                           </AnchorPane>
                                           <AnchorPane fx:id="addEmployee_anchorpane" layoutX="10.0" layoutY="10.0" prefHeight="578.4" prefWidth="572.8" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <children>
-                                                <Label layoutX="267.0" layoutY="223.0" text="add employee" />
+                                                <Label layoutX="349.0" layoutY="327.0" text="assign to :">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font></Label>
+                                                <TableView fx:id="emp_table" layoutX="31.0" layoutY="29.0" prefHeight="506.0" prefWidth="202.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="empId_col" prefWidth="75.0" text="emp Id" />
+                                                    <TableColumn fx:id="emp_name_col" prefWidth="126.39996948242188" text="emp name" />
+                                                  </columns>
+                                                </TableView>
+                                                <TableView fx:id="tasks_table" layoutX="252.0" layoutY="29.0" prefHeight="200.0" prefWidth="266.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="taskId_col" prefWidth="75.0" text="taskId" />
+                                                      <TableColumn fx:id="task_name_col" prefWidth="122.39990234375" text="Task name" />
+                                                      <TableColumn fx:id="empid_tasks_col" prefWidth="67.2000732421875" text="empId" />
+                                                  </columns>
+                                                </TableView>
+                                                <TextField fx:id="empid_textfield" layoutX="299.0" layoutY="281.0" />
+                                                <TextField fx:id="task_id_textfield" layoutX="299.0" layoutY="363.0" />
+                                                <Button fx:id="assigen_task_button" layoutX="347.0" layoutY="422.0" mnemonicParsing="false" text="assign" />
+                                                <Text layoutX="336.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee id">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Text>
                                              </children>
                                           </AnchorPane>
                                           <AnchorPane fx:id="logs_anchorpane" layoutX="10.0" layoutY="10.0" prefHeight="588.8" prefWidth="584.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

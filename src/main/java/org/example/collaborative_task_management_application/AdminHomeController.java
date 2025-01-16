@@ -27,7 +27,6 @@ import java.util.Set;
 
 public class AdminHomeController implements Initializable {
 
-
     @FXML
     private TableView<LogEntry> log_tabel_view;
     @FXML
@@ -100,6 +99,27 @@ public class AdminHomeController implements Initializable {
     private Button new_task_button;
     @FXML
     private Button save_tasks_button;
+    @FXML
+    private TableView<Employee> emp_table;
+
+    @FXML
+    private TableColumn<?,?> empId_col;
+    @FXML
+    private TableColumn<?,?> emp_name_col;
+    @FXML
+    private TableView<Task> tasks_table;
+    @FXML
+    private TableColumn<?,?> taskId_col;
+    @FXML
+    private TableColumn<?,?> empid_tasks_col;
+    @FXML
+    private TableColumn<?,?> task_name_col;
+    @FXML
+    private TextField empid_textfield;
+    @FXML
+    private TextField task_id_textfield;
+    @FXML
+    private Button assigen_task_button;
     @FXML
     private Button users_button;
 
@@ -176,6 +196,17 @@ public class AdminHomeController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setCellValue();
+        setCellValue_empTable();
+        setCellValue_taskTable();
+        ObservableList<Employee> employeeData = Main_database_connection.selectParticularEmployee();
+        ObservableList<Task> tasksss;
+        try {
+            tasksss = Main_database_connection.getTasksForTabel();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        emp_table.setItems(employeeData);
+        tasks_table.setItems(tasksss);
         ObservableList<LogEntry> data12 = Main_database_connection.getLogEntry();
         log_tabel_view.setItems(data12);
         Set<String> taskName = new HashSet<String>();
@@ -205,8 +236,6 @@ public class AdminHomeController implements Initializable {
             throw new RuntimeException(e);
         }
 
-
-        // Enable drag-and-drop functionality
         setupDragAndDrop(todoList, inProgressList);
         setupDragAndDrop(inProgressList, doneList);
         setupDragAndDrop(doneList, todoList);
@@ -275,14 +304,7 @@ public class AdminHomeController implements Initializable {
     public void setDelete_log_button() throws SQLException {
         Main_database_connection.deleteLog();
     }
-    @FXML
-    public void getnametexxtfield(String name1234){
 
-
-    }
-    @FXML void gettasks(){
-
-    }
     @FXML
     public void setNew_task_button(){
         String new_task= new_task_fiels.getText();
@@ -318,9 +340,6 @@ public class AdminHomeController implements Initializable {
             textPart = result[1].trim();
             Task.updateTaskStatus(numberPart,targetColumn);
         }
-
-
-
     }
 
     @FXML
@@ -331,6 +350,19 @@ public class AdminHomeController implements Initializable {
         String name =test.getId();
         Employee employee = Main_database_connection.getEmployeeByName(name,password);
         System.out.println(employee.getName());
+    }
+
+    @FXML
+    public void setCellValue_empTable(){
+        empId_col.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        emp_name_col.setCellValueFactory(new PropertyValueFactory<>("name"));
+    }
+
+    @FXML
+    public void setCellValue_taskTable(){
+        taskId_col.setCellValueFactory(new PropertyValueFactory<>("taskId"));
+        task_name_col.setCellValueFactory(new PropertyValueFactory<>("title"));
+        empid_tasks_col.setCellValueFactory(new PropertyValueFactory<>("assignedEmployeeId"));
     }
 
 
