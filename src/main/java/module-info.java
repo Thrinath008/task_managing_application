@@ -10,6 +10,7 @@ module org.example.collaborative_task_management_application {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires com.google.gson;
     requires java.sql;
 
     opens org.example.collaborative_task_management_application to javafx.fxml;

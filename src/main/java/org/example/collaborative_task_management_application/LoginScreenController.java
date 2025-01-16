@@ -93,7 +93,7 @@ public class LoginScreenController implements Initializable {
                 case ENTER -> login_button.fire();
             }
         });
-        String []items = {"employee","Admin","Manager"};
+        String []items = {"Employee","Admin","Manager"};
 
         role_picker.getItems().addAll(items);
         role_picker.setOnAction(e->{

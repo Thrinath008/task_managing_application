@@ -1,13 +1,16 @@
 package org.example.collaborative_task_management_application.databases;
 
+import com.google.gson.GsonBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.example.collaborative_task_management_application.LogEntry;
+import org.example.collaborative_task_management_application.Employee;
 
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import com.google.gson.Gson;
 
 public class Main_database_connection {
     private static final String URL = "jdbc:mysql://localhost:3306/taskmanager_final";
@@ -28,6 +31,10 @@ public class Main_database_connection {
             }
         }
         return connection;
+    }
+
+    public Main_database_connection() throws SQLException {
+        connection = DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
     // Add employee method
@@ -72,6 +79,8 @@ public class Main_database_connection {
             return false;
         }
     }
+
+
 
 
     // Close the database connection
@@ -188,5 +197,22 @@ public class Main_database_connection {
         // Test the connection and addEmployee method
         connectiondb();
         close();
+    }
+
+    public static boolean insertEmployee(String name, String email, String role, Employee employee, String password) throws SQLException {
+        String sql = "INSERT INTO employee (name, email, role, employeeJson, password) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            Gson gson = new GsonBuilder().excludeFieldsWithModifiers(java.lang.reflect.Modifier.PRIVATE).create();
+            String employeeJson = gson.toJson(employee);
+            pstmt.setString(1, name);
+            pstmt.setString(2, email);
+            pstmt.setString(3, role);
+            pstmt.setString(4, employeeJson);
+            pstmt.setString(5,password);
+            pstmt.executeUpdate();
+            Employee empTest = gson.fromJson(employeeJson,Employee.class);
+            System.out.println(empTest.getName());
+            return true;
+        }
     }
 }

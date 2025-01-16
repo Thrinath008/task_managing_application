@@ -14,6 +14,7 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -56,11 +57,12 @@ public class SignInScreenController implements Initializable {
         Stage stage = (Stage)exit_button.getScene().getWindow();
         stage.close();
     }
-    public void setSignup_button(ActionEvent event) throws IOException {
+    public void setSignup_button(ActionEvent event) throws IOException, SQLException {
         String name = name_textfield.getText();
         String email = email_textfield.getText();
         String password = password_textfield.getText();
         String confirmPassword = confirm_password_textfield.getText();
+        String role = role_combobox.getSelectionModel().getSelectedItem();
         if (name.isEmpty()||email.isEmpty()||password.isEmpty()||confirmPassword.isEmpty()){
             showAlert(Alert.AlertType.ERROR,"Error","fill all the blanks");
             return;
@@ -70,9 +72,10 @@ public class SignInScreenController implements Initializable {
             return;
         }else {
             Main_database_connection.connectiondb();
-            boolean success = Main_database_connection.addEmployee(name,email,password);
+            Employee emp = new Employee(name,email,role);
+            boolean success = Main_database_connection.insertEmployee(name, email, role, emp, password);
             if (success) {
-                System.out.println("Employee added successfully in another package!");
+                System.out.println("User added successfully!");
                 signup_button.getScene().getWindow().hide();
                 Parent parent = FXMLLoader.load(getClass().getResource("login-screen.fxml"));
                 Stage stage = new Stage();
@@ -80,11 +83,10 @@ public class SignInScreenController implements Initializable {
                 stage.initStyle(StageStyle.UNDECORATED);
                 stage.setScene(scene);
                 stage.show();
-                showAlert(Alert.AlertType.CONFIRMATION,"Successful","U have completed signS");
+                showAlert(Alert.AlertType.CONFIRMATION,"Successful","U have completed SignUp procedure please log in");
             } else {
-                System.out.println("Failed to add employee.");
+                System.out.println("Failed to add user.");
             }
-            Main_database_connection.close();
         }
 
     }
@@ -97,7 +99,7 @@ public class SignInScreenController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        String []items = {"employee","admin"};
+        String []items = {"employee","Admin","Manager"};
         role_combobox.getItems().addAll(items);
     }
 }
