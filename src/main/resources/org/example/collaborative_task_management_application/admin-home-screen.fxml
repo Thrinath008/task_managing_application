@@ -101,11 +101,11 @@
                                  <left>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                        <children>
-                                          <AnchorPane layoutX="-6.0" prefHeight="562.4" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+                                          <AnchorPane prefHeight="562.4" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.8000000000000114" AnchorPane.topAnchor="0.0">
                                              <children>
-                                                <Button layoutX="50.0" layoutY="153.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="100.0" text="team" />
+                                                <Button layoutX="50.0" layoutY="228.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="100.0" text="team" />
                                                 <Button fx:id="kanBanview_button" layoutX="50.0" layoutY="87.0" mnemonicParsing="false" onAction="#setKanBan_anchorpane" prefWidth="100.0" text="kanBan" />
-                                                <Button layoutX="50.0" layoutY="223.0" mnemonicParsing="false" prefWidth="100.0" text="projects" />
+                                                <Button fx:id="projects_button" layoutX="50.0" layoutY="157.0" mnemonicParsing="false" onAction="#setProjects_anchorpane" prefWidth="100.0" text="projects" />
                                              </children>
                                           </AnchorPane>
                                        </children></AnchorPane>
@@ -147,6 +147,16 @@
                                                 <Text layoutX="222.0" layoutY="455.0" strokeType="OUTSIDE" strokeWidth="0.0" text="enter new task :" />
                                              </children>
                                           </AnchorPane>
+                                          <AnchorPane fx:id="projects_anchorpane" prefHeight="562.4" prefWidth="549.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <TableView fx:id="project_tabel" layoutX="125.0" layoutY="41.0" prefHeight="354.0" prefWidth="298.0">
+                                                  <columns>
+                                                    <TableColumn prefWidth="75.0" text="emp id" />
+                                                    <TableColumn prefWidth="220.79999389648435" text="task name" />
+                                                  </columns>
+                                                </TableView>
+                                             </children>
+                                          </AnchorPane>
                                        </children></AnchorPane>
                                  </center>
                               </BorderPane>
@@ -160,9 +170,9 @@
                                        <children>
                                           <VBox alignment="CENTER" layoutX="57.0" layoutY="34.0" prefHeight="299.0" prefWidth="200.0" spacing="30.0" AnchorPane.bottomAnchor="260.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <children>
-                                                <Button fx:id="usersProfiles_button" mnemonicParsing="false" onAction="#setUsers_profile_anchorpane" prefWidth="120.0" text="users proffile" />
-                                                <Button fx:id="addNewEmployee_button" mnemonicParsing="false" onAction="#setAddEmployee_anchorpane" prefHeight="30.0" prefWidth="120.0" text="add emp" />
+                                                <Button fx:id="addNewEmployee_button" mnemonicParsing="false" onAction="#setAddEmployee_anchorpane" prefHeight="30.0" prefWidth="120.0" text="assigen tasks" />
                                                 <Button fx:id="logs_button" mnemonicParsing="false" onAction="#setLogs_anchorpane" prefHeight="30.0" prefWidth="120.0" text="logs" />
+                                                <Button fx:id="usersProfiles_button" mnemonicParsing="false" onAction="#setUsers_profile_anchorpane" prefWidth="120.0" text="users proffile" />
                                              </children>
                                           </VBox>
                                        </children>
@@ -231,7 +241,56 @@
                         </AnchorPane>
                         <AnchorPane fx:id="settings_anchorpane" layoutX="10.0" layoutY="10.0" prefHeight="568.0" prefWidth="762.4" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Label layoutX="297.0" layoutY="242.0" text="settings" />
+                              <BorderPane prefHeight="561.6" prefWidth="749.6">
+                                 <left>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <Button fx:id="edit_profile_button" layoutX="15.0" layoutY="66.0" mnemonicParsing="false" onAction="#seedit_profile_button" prefHeight="38.0" prefWidth="173.0" text="Edit profile" />
+                                          <Button layoutX="13.0" layoutY="150.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="173.0" text="report bug" />
+                                          <Button fx:id="delete_account_button" layoutX="35.0" layoutY="465.0" mnemonicParsing="false"  text="Delete Account" />
+                                          <AnchorPane fx:id="delete_anchorpane" layoutY="244.0" prefHeight="200.0" prefWidth="200.0" visible="false">
+                                             <children>
+                                                <Button fx:id="revert_button_settings" layoutX="14.0" layoutY="148.0" mnemonicParsing="false" text="revert" />
+                                                <Button layoutX="114.0" layoutY="148.0" mnemonicParsing="false" onAction="#setdelete_anchorpane" text="delete" />
+                                                <Text layoutX="18.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" are us sure u want to delete the account, this will permantly delete your account" textAlignment="CENTER" wrappingWidth="163.7367172241211">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                    </AnchorPane>
+                                 </left>
+                                 <center>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                       <children>
+                                          <AnchorPane fx:id="edit_details_anchorpane" layoutX="201.0" layoutY="194.0" prefHeight="561.6" prefWidth="549.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <VBox layoutX="83.0" layoutY="70.0" prefHeight="454.0" prefWidth="382.0" spacing="10.0" AnchorPane.bottomAnchor="37.19999999999993" AnchorPane.leftAnchor="83.0" AnchorPane.rightAnchor="84.19999999999999" AnchorPane.topAnchor="70.0">
+                                                   <children>
+                                                      <Label text="name:" />
+                                                      <TextField fx:id="name_text_field_edit_profile" />
+                                                      <Label text="email:" />
+                                                      <TextField fx:id="email_textfiled_edit_profile" layoutX="10.0" layoutY="10.0" />
+                                                      <Label text="password" />
+                                                      <TextField fx:id="password_textfiled_edit_profile" layoutX="10.0" layoutY="44.0" />
+                                                      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+                                                         <children>
+                                                            <Button fx:id="clear_fields_button_edit_profile" mnemonicParsing="false" text="clear" />
+                                                            <Button fx:id="confirm_edit_button_edit_profile" mnemonicParsing="false" text="confirm" />
+                                                         </children>
+                                                      </HBox>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane fx:id="more_anchorpane" layoutX="10.0" layoutY="10.0" prefHeight="561.6" prefWidth="549.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="572.0" prefWidth="560.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                       </children>
+                                    </AnchorPane>
+                                 </center>
+                              </BorderPane>
                            </children>
                         </AnchorPane>
                             </children>

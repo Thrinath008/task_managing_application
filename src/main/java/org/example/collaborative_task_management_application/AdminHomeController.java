@@ -40,6 +40,8 @@ public class AdminHomeController implements Initializable {
     @FXML
     private TableColumn<LogEntry,String> time_col;
     @FXML
+    private TableView<?> project_tabel;
+    @FXML
     private Button delete_log_button;
     @FXML
     private Button refresh_log_button;
@@ -63,6 +65,8 @@ public class AdminHomeController implements Initializable {
 
     @FXML
     private AnchorPane logs_anchorpane;
+    @FXML
+    private AnchorPane projects_anchorpane;
 
     @FXML
     private Button logs_button;
@@ -121,19 +125,43 @@ public class AdminHomeController implements Initializable {
     @FXML
     private TextField empid_textfield;
     @FXML
+    private Button projects_button;
+    @FXML
     private TextField task_id_textfield;
     @FXML
     private Button assigen_task_button;
     @FXML
+    private AnchorPane setEdit_details_anchorpane;
+    @FXML
+    private AnchorPane delete_anchorpane;
+    @FXML
+    private Button edit_profile_button;
+    @FXML
     private Button users_button;
-
-
+    @FXML
+    private AnchorPane edit_details_anchorpane;
+    @FXML
+    private Button delete_account_button;
+    @FXML
+    private void seedit_profile_button(){
+        edit_details_anchorpane.setVisible(true);
+    }
+    @FXML
+    private void setdelete_anchorpane(){
+        delete_anchorpane.setVisible(true);
+    }
 
 
     ObservableList<LogEntry> data12;
     @FXML
     private void setKanBan_anchorpane(){
         kanBan_anchorpane.setVisible(true);
+        projects_anchorpane.setVisible(false);
+    }
+    @FXML
+    private void setProjects_anchorpane(){
+        kanBan_anchorpane.setVisible(false);
+        projects_anchorpane.setVisible(true);
     }
 
 
@@ -190,6 +218,7 @@ public class AdminHomeController implements Initializable {
         logs_anchorpane.setVisible(false);
         users_profile_anchorpane.setVisible(true);
     }
+
     public void exit_button_on_action(ActionEvent event) {
         Stage stage = (Stage)exit_button.getScene().getWindow();
         stage.close();

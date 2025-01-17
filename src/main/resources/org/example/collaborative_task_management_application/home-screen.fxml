@@ -70,7 +70,7 @@
                         <VBox alignment="CENTER" layoutX="6.0" layoutY="100.0" prefHeight="142.0" prefWidth="238.0">
                            <children>
                               <Label text="WELCOME," />
-                              <Label fx:id="name_label" contentDisplay="CENTER" prefHeight="54.0" prefWidth="187.0" text="name" textAlignment="CENTER">
+                              <Label fx:id="name_label" contentDisplay="CENTER" prefHeight="54.0" text="name" textAlignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="36.0" />
                                  </font>
@@ -101,7 +101,7 @@
                      <children>
                         <AnchorPane layoutX="303.0" layoutY="185.0" prefHeight="579.2" prefWidth="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <AnchorPane fx:id="messages_anchorpane" layoutX="275.0" layoutY="185.0" prefHeight="569.6" prefWidth="749.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <AnchorPane fx:id="messages_anchorpane" layoutX="275.0" layoutY="185.0" prefHeight="569.6" prefWidth="749.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <BorderPane prefHeight="569.6" prefWidth="749.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <left>
