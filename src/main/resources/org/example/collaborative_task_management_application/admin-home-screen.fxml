@@ -197,7 +197,7 @@
                                                 </TableView>
                                                 <TextField fx:id="empid_textfield" layoutX="299.0" layoutY="281.0" />
                                                 <TextField fx:id="task_id_textfield" layoutX="299.0" layoutY="363.0" />
-                                                <Button fx:id="assigen_task_button" layoutX="347.0" layoutY="422.0" mnemonicParsing="false" text="assign" />
+                                                <Button fx:id="assigen_task_button" layoutX="347.0" layoutY="422.0" mnemonicParsing="false" onAction="#onAssignButtonClick" text="assign" />
                                                 <Text layoutX="336.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Employee id">
                                                    <font>
                                                       <Font size="18.0" />

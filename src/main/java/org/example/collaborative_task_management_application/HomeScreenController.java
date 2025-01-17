@@ -350,7 +350,7 @@ public class HomeScreenController implements Initializable {
 
     public void setMessageContentOnTableClick(){
         emptabel_messages.setOnMouseClicked(e-> {
-            if (e.getClickCount() == 2) {
+            if (e.getClickCount() == 1) {
                 Employee selectedEmployee = emptabel_messages.getSelectionModel().getSelectedItem();
                 if (selectedEmployee != null) {
                     empId_message = selectedEmployee.getId();

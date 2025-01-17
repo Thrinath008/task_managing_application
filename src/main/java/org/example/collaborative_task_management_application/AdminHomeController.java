@@ -207,6 +207,8 @@ public class AdminHomeController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        onEmpListTableClick();
+        onTaskListTableClick();
         setCellValue();
         setCellValue_empTable();
         setCellValue_taskTable();
@@ -398,8 +400,63 @@ public class AdminHomeController implements Initializable {
     @FXML
     public void onEmpListTableClick(){
         emp_table.setOnMouseClicked(e->{
-            
+            if (e.getClickCount() == 1) {
+                Employee selectedEmployee = emp_table.getSelectionModel().getSelectedItem();
+                if (selectedEmployee != null) {
+                    empId = selectedEmployee.getId();
+                    empName = selectedEmployee.getName();
+                    openMessageDialog(empId, empName);
+                }
+            }
+            empid_textfield.setText(String.valueOf(empId));
         });
+    }
+
+    int taskId;
+    String taskName;
+
+    @FXML
+    public void onTaskListTableClick(){
+        tasks_table.setOnMouseClicked(e->{
+            if (e.getClickCount() == 1) {
+                Task selectedTask = tasks_table.getSelectionModel().getSelectedItem();
+                if (selectedTask != null) {
+                    taskId = selectedTask.getTaskId();
+                    taskName = selectedTask.getTitle();
+                    openMessageDialogTask(taskId, taskName);
+                }
+            }
+            task_id_textfield.setText(String.valueOf(taskId));
+        });
+    }
+
+    @FXML
+    public void onAssignButtonClick() throws SQLException {
+        Main_database_connection db = new Main_database_connection();
+        Task task = db.getTaskJson(taskId);
+        task.setAssignedEmployeeId(empId);
+        db.updateTaskDetails(taskId,task.getTitle(),empId,task);
+        task_id_textfield.clear();
+        empid_textfield.clear();
+        showAlert(Alert.AlertType.CONFIRMATION,"success","Task assigend to the employee");
+
+    }
+
+
+    private void openMessageDialog(int empId, String name) {
+        System.out.println("Clicking emp table admin: " + empId + ", Name: " + name);
+    }
+
+    private void openMessageDialogTask(int empId, String name){
+        System.out.println("Clicking task table admin: " + empId + ", Title: " + name);
+    }
+    private void showAlert(Alert.AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setContentText(message);
+        alert.initStyle(StageStyle.UNDECORATED);
+        alert.show();
+
     }
 
 

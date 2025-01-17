@@ -407,8 +407,6 @@ public class Main_database_connection {
         }
     }
 
-
-
     public void deleteTask(int taskId) throws SQLException {
         String sql = "DELETE FROM tasks WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
