@@ -1,4 +1,5 @@
 package org.example.collaborative_task_management_application;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -20,9 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class HomeScreenController implements Initializable {
@@ -292,22 +291,41 @@ public class HomeScreenController implements Initializable {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
-        Set<String> taskName = new HashSet<String>();
+        Set<String> todoListItems = new HashSet<String>();
+        Set<String> progressItems = new HashSet<String>();
+        Set<String> doneItems = new HashSet<String>();
         try {
             Main_database_connection db = new Main_database_connection();
-            ResultSet resultSet = db.selectTasks();
-            while(resultSet.next()){
-                taskName.add(resultSet.getInt("id")+" - "+ resultSet.getString("task_name"));
+            try (ResultSet resultSet = db.selectTasks()) {
+                while (resultSet.next()) {
+                    String columnName = resultSet.getString("column_name");
+                    System.out.println(columnName);
+                    if (columnName.equals("To-Do")) {
+                        todoListItems.add(resultSet.getInt("id") + " - " + resultSet.getString("task_name"));
+                    } else if (columnName.equals("In Progress")) {
+                        progressItems.add(resultSet.getInt("id") + " - " + resultSet.getString("task_name"));
+                    } else if (columnName.equals("Done")) {
+                        doneItems.add(resultSet.getInt("id") + " - " + resultSet.getString("task_name"));
+                    }
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         todoList.getItems().clear();
-        todoList.getItems().addAll(taskName);
-        new_task_fiels.clear();
+        todoList.getItems().addAll(todoListItems);
+        inProgressList.getItems().clear();
+        inProgressList.getItems().addAll(progressItems);
+        doneList.getItems().clear();
+        doneList.getItems().addAll(doneItems);
     }
     @FXML
     public void save_button_onclick(){
+        if (draggedItem == null || draggedItem.isEmpty()) {
+            System.out.println("No item has been dragged!");
+            return;
+        }
+
         String[] result = draggedItem.split("\\s*-\\s*", 2);
 
         int numberPart;
@@ -320,10 +338,92 @@ public class HomeScreenController implements Initializable {
         }
     }
 
+    @FXML
+    private TextField message_text_box;
+
+    @FXML
+    private Button sendMessage;
+
+    private int empId_message;
+    private String name_message;
+    private String message;
+
+    public void setMessageContentOnTableClick(){
+        emptabel_messages.setOnMouseClicked(e-> {
+            if (e.getClickCount() == 2) {
+                Employee selectedEmployee = emptabel_messages.getSelectionModel().getSelectedItem();
+                if (selectedEmployee != null) {
+                    empId_message = selectedEmployee.getId();
+                    name_message = selectedEmployee.getName();
+                    openMessageDialog(empId_message, name_message);
+                }
+            }
+            try {
+                messageList.getItems().clear();
+                displayMessages();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+    }
+
+    @FXML
+    public void onSendMessageButtonClick(){
+
+        message = message_text_box.getText();
+        if (message == null || message.trim().isEmpty()) {
+            System.out.println("Message content cannot be empty!");
+            return;
+        }
+        else {
+            messages msg = new messages(ID, empId_message, message);
+            try {
+                Main_database_connection db = new Main_database_connection();
+                db.sendMessage(msg);
+                message_text_box.clear();
+                messageList.getItems().clear();
+                displayMessages();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+
+    }
+
+    private void openMessageDialog(int empId, String name) {
+        System.out.println("Opening message dialog for Employee ID: " + empId + ", Name: " + name);
+    }
+
+    @FXML
+    private ListView<String> messageList;
+
+    @FXML
+    public void displayMessages() throws SQLException {
+        messageList.getItems().clear();
+        Main_database_connection db = new Main_database_connection();
+        List<messages> msgList = db.getMessageJson(ID,empId_message);
+        System.out.println("Messages fetched: " + msgList.size());
+        List<String> messages = new ArrayList<String>();
+        for(messages msg:msgList){
+            Employee sender = Main_database_connection.getEmployeeByID(ID);
+            Employee receiver = Main_database_connection.getEmployeeByID(empId_message);
+            if(msg.senderId == ID){
+                String[] dateTime = msg.getSentAt().split(" ");
+                messages.add(sender.getName() +" : " + msg.getMessage()+ " -- "+dateTime[1]);
+            }
+            else if(msg.senderId == empId_message){
+                String[] dateTime = msg.getSentAt().split(" ");
+                messages.add(receiver.getName() + " : "+msg.getMessage()+" -- "+dateTime[1]);
+            }
+        }
+        messageList.getItems().addAll(messages);
+    }
+
     @Override
 
     public void initialize(URL location, ResourceBundle resources) {
 
+        setMessageContentOnTableClick();
         setEmp_tableValues();
         ObservableList<Employee> empdata = Main_database_connection.selectParticularEmployee();
         emptabel_messages.setItems(empdata);

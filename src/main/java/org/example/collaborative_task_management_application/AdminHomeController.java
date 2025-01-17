@@ -326,18 +326,33 @@ public class AdminHomeController implements Initializable {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
-        Set<String> taskName = new HashSet<String>();
+        Set<String> todoListItems = new HashSet<String>();
+        Set<String> progressItems = new HashSet<String>();
+        Set<String> doneItems = new HashSet<String>();
         try {
             Main_database_connection db = new Main_database_connection();
-            ResultSet resultSet = db.selectTasks();
-            while(resultSet.next()){
-                taskName.add(resultSet.getInt("id")+" - "+ resultSet.getString("task_name"));
+            try (ResultSet resultSet = db.selectTasks()) {
+                while (resultSet.next()) {
+                    String columnName = resultSet.getString("column_name");
+                    System.out.println(columnName);
+                    if (columnName.equals("To-Do")) {
+                        todoListItems.add(resultSet.getInt("id") + " - " + resultSet.getString("task_name"));
+                    } else if (columnName.equals("In Progress")) {
+                        progressItems.add(resultSet.getInt("id") + " - " + resultSet.getString("task_name"));
+                    } else if (columnName.equals("Done")) {
+                        doneItems.add(resultSet.getInt("id") + " - " + resultSet.getString("task_name"));
+                    }
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         todoList.getItems().clear();
-        todoList.getItems().addAll(taskName);
+        todoList.getItems().addAll(todoListItems);
+        inProgressList.getItems().clear();
+        inProgressList.getItems().addAll(progressItems);
+        doneList.getItems().clear();
+        doneList.getItems().addAll(doneItems);
     }
 
     @FXML
@@ -375,6 +390,16 @@ public class AdminHomeController implements Initializable {
         taskId_col.setCellValueFactory(new PropertyValueFactory<>("taskId"));
         task_name_col.setCellValueFactory(new PropertyValueFactory<>("title"));
         empid_tasks_col.setCellValueFactory(new PropertyValueFactory<>("assignedEmployeeId"));
+    }
+
+    int empId;
+    String empName;
+
+    @FXML
+    public void onEmpListTableClick(){
+        emp_table.setOnMouseClicked(e->{
+            
+        });
     }
 
 

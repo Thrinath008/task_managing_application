@@ -33,7 +33,7 @@ public class Task {
             }
         }
         while(assignedId.contains(this.taskId)){
-            this.taskId = rand.nextInt();
+            this.taskId = rand.nextInt(1000);
         }
         this.assignedEmployeeId = 0;
         this.title = title;

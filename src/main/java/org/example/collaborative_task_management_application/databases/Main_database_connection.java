@@ -3,18 +3,16 @@ package org.example.collaborative_task_management_application.databases;
 import com.google.gson.GsonBuilder;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.example.collaborative_task_management_application.LogEntry;
-import org.example.collaborative_task_management_application.Employee;
+import org.example.collaborative_task_management_application.*;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import com.google.gson.Gson;
-import org.example.collaborative_task_management_application.Project;
-import org.example.collaborative_task_management_application.Task;
 
 public class Main_database_connection {
     private static final String URL = "jdbc:mysql://localhost:3306/taskmanager_final";
@@ -409,6 +407,8 @@ public class Main_database_connection {
         }
     }
 
+
+
     public void deleteTask(int taskId) throws SQLException {
         String sql = "DELETE FROM tasks WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -437,6 +437,45 @@ public class Main_database_connection {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    //######################Messages methods####################################
+    public void sendMessage(messages msg) throws SQLException {
+        String sql = "INSERT INTO employeemessages (message_id, sender_id, receiver_id, message, message_json, sent_at) VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            Gson gson = new GsonBuilder().excludeFieldsWithModifiers(java.lang.reflect.Modifier.PRIVATE).create();
+            String messageJSON = gson.toJson(msg);
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//            msg.setSentAt(LocalDateTime.now().format(formatter));
+            pstmt.setInt(1, msg.getMessageId());
+            pstmt.setInt(2, msg.getSenderId());
+            pstmt.setInt(3, msg.getReceiverId());
+            pstmt.setString(4, msg.getMessage());
+            pstmt.setString(5, messageJSON);
+            pstmt.setString(6, msg.getSentAt());
+            pstmt.executeUpdate();
+            logAction("Message sent", msg.getMessage() + " with message id " + msg.getMessageId()+ " added ");
+        }
+    }
+
+    public List<messages> getMessageJson(int senderId, int receiverId) throws SQLException {
+        String sql = "SELECT * FROM employeemessages WHERE (sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?) ORDER BY sent_at ASC";
+        System.out.println(senderId);
+        System.out.println(receiverId);
+        List<messages> msgList = new ArrayList<messages>();
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)){
+            Gson gson = new GsonBuilder().excludeFieldsWithModifiers(java.lang.reflect.Modifier.PRIVATE).create();
+            pstmt.setInt(1, senderId);
+            pstmt.setInt(2, receiverId);
+            pstmt.setInt(3, receiverId);
+            pstmt.setInt(4, senderId);
+            ResultSet resultSet = pstmt.executeQuery();
+            while(resultSet.next()){
+                msgList.add(gson.fromJson(resultSet.getString("message_json"), messages.class));
+            }
+            System.out.println("Message size imported: " + msgList.size());
+        }
+        return msgList;
     }
 
 

@@ -124,9 +124,9 @@
                                        <center>
                                           <AnchorPane prefHeight="570.0" prefWidth="522.0" BorderPane.alignment="CENTER">
                                              <children>
-                                                <ListView layoutX="7.0" layoutY="51.0" prefHeight="494.0" prefWidth="471.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="51.0" />
-                                                <TextField layoutX="7.0" layoutY="492.0" prefHeight="42.0" prefWidth="410.0" AnchorPane.rightAnchor="90.60000000000002" />
-                                                <Button layoutX="417.0" layoutY="492.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="60.0" AnchorPane.rightAnchor="31.0">
+                                                <ListView fx:id="messageList" layoutX="15.2" layoutY="48.0" prefHeight="449.0" prefWidth="470.0" AnchorPane.bottomAnchor="72.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="23.0" AnchorPane.topAnchor="48.0" />
+                                                <TextField fx:id="message_text_box" layoutX="15.0" layoutY="497.0" prefHeight="42.0" prefWidth="410.0" AnchorPane.rightAnchor="82.60000000000002" />
+                                                <Button fx:id="sendMessage" layoutX="426.0" layoutY="497.0" mnemonicParsing="false" onAction="#onSendMessageButtonClick" onMouseClicked="#save_button_onclick" prefHeight="42.0" prefWidth="60.0" AnchorPane.rightAnchor="22.0">
                                                    <graphic>
                                                       <FontAwesomeIcon iconName="PAPER_PLANE" />
                                                    </graphic></Button>

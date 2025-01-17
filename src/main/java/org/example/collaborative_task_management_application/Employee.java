@@ -29,7 +29,7 @@ public class Employee {
                 }
             }
         while(assignedId.contains(this.Id)){
-            this.Id = rand.nextInt();
+            this.Id = rand.nextInt(1000);
         }
         this.name = name;
         this.email = email;
