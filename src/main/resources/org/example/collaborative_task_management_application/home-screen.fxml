@@ -62,19 +62,20 @@
                                  </graphic>
                               </Button>
                            </children></VBox>
-                        <FontAwesomeIcon iconName="USER" layoutX="78.0" layoutY="117.0" size="10em" />
+                        <FontAwesomeIcon iconName="USER" layoutX="78.0" layoutY="103.0" size="10em" />
                         <Button fx:id="logout_button" layoutX="14.0" layoutY="531.0" mnemonicParsing="false" onAction="#setlogout_button" AnchorPane.bottomAnchor="14.000000000000021" AnchorPane.leftAnchor="14.0">
                            <graphic>
                               <FontAwesomeIcon iconName="SIGN_OUT" />
                            </graphic></Button>
-                        <VBox alignment="CENTER" layoutX="6.0" layoutY="130.0" prefHeight="94.0" prefWidth="237.0">
+                        <VBox alignment="CENTER" layoutX="6.0" layoutY="100.0" prefHeight="142.0" prefWidth="238.0">
                            <children>
                               <Label text="WELCOME," />
-                              <Label fx:id="name_label" contentDisplay="CENTER" text="name">
+                              <Label fx:id="name_label" contentDisplay="CENTER" prefHeight="54.0" prefWidth="187.0" text="name" textAlignment="CENTER">
                                  <font>
                                     <Font name="System Bold" size="36.0" />
                                  </font>
                               </Label>
+                              <Label fx:id="empid_label" text="Label" />
                            </children>
                         </VBox>
                      </children>
@@ -100,7 +101,7 @@
                      <children>
                         <AnchorPane layoutX="303.0" layoutY="185.0" prefHeight="579.2" prefWidth="760.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <AnchorPane fx:id="messages_anchorpane" layoutX="275.0" layoutY="185.0" prefHeight="569.6" prefWidth="749.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <AnchorPane fx:id="messages_anchorpane" layoutX="275.0" layoutY="185.0" prefHeight="569.6" prefWidth="749.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <BorderPane prefHeight="569.6" prefWidth="749.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <left>
@@ -111,10 +112,10 @@
                                                       <Font name="System Bold" size="24.0" />
                                                    </font>
                                                 </Text>
-                                                <TableView layoutX="21.0" layoutY="52.0" prefHeight="447.0" prefWidth="200.0">
+                                                <TableView fx:id="emptabel_messages" layoutX="21.0" layoutY="52.0" prefHeight="447.0" prefWidth="200.0">
                                                   <columns>
-                                                    <TableColumn prefWidth="140.0000057220459" text="name" />
-                                                    <TableColumn prefWidth="60.0" text="time" />
+                                                      <TableColumn fx:id="empid_messages_col" prefWidth="75.0" text="empId" />
+                                                    <TableColumn fx:id="employee_name_messages_col" prefWidth="123.9999771118164" text="name" />
                                                   </columns>
                                                 </TableView>
                                              </children>
@@ -172,7 +173,7 @@
                                     </AnchorPane>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane fx:id="settings_anchorpane" layoutX="-9.0" prefHeight="569.6" prefWidth="749.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                              <AnchorPane fx:id="settings_anchorpane" layoutX="-9.0" prefHeight="569.6" prefWidth="749.6" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <BorderPane layoutX="309.0" layoutY="169.0" prefHeight="561.6" prefWidth="749.6" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <left>

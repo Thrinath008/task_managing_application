@@ -239,6 +239,22 @@ public class Main_database_connection {
             throw new RuntimeException(e);
         }
     }
+    public static Employee getEmployeeByID(int id){
+        String sql = "select employeeJson from employee where employeeId = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setInt(1,id);
+            ResultSet resultSet = pstmt.executeQuery();
+            if (resultSet.next()) {
+                Gson gson = new GsonBuilder().excludeFieldsWithModifiers(java.lang.reflect.Modifier.PRIVATE).create();
+                return gson.fromJson(resultSet.getString("employeeJson"), Employee.class);
+            } else {
+                System.out.println("No employee found with the given credentials.");
+                return null; // No matching employee
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static ObservableList<Employee> selectParticularEmployee(){
         String sql = "SELECT * FROM employee";

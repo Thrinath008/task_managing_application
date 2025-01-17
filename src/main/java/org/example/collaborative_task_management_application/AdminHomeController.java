@@ -127,6 +127,9 @@ public class AdminHomeController implements Initializable {
     @FXML
     private Button users_button;
 
+
+
+
     ObservableList<LogEntry> data12;
     @FXML
     private void setKanBan_anchorpane(){
@@ -139,6 +142,7 @@ public class AdminHomeController implements Initializable {
         description_col.setCellValueFactory(new PropertyValueFactory<>("description"));
         action_type_col.setCellValueFactory(new PropertyValueFactory<>("actionType"));
     }
+
 
     @FXML
     public void setDashboard_anchorpane(){

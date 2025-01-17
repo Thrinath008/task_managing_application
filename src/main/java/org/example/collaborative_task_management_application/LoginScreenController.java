@@ -147,7 +147,8 @@ public class LoginScreenController implements Initializable {
                 homeScreenController.getpassword(password_field.getText());
                 homeScreenController.set_Name_Label(id_textfield.getText());
                 Employee employee = Main_database_connection.getEmployeeByName(id_textfield.getText(),password_field.getText());
-                homeScreenController.setEmail(employee.getEmail());
+//                homeScreenController.setEmail(employee.getEmail());
+                homeScreenController.setid(employee.getId());
 
                 // Make the window draggable
                 root.setOnMousePressed(event -> {

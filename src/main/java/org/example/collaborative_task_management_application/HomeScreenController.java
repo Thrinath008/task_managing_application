@@ -1,13 +1,12 @@
 package org.example.collaborative_task_management_application;
+import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -85,11 +84,30 @@ public class HomeScreenController implements Initializable {
     private Button new_task_button;
     @FXML
     private TextField new_task_fiels;
+    @FXML
+    private Label empid_label;
 
     @FXML
     private Button settings_button;
+    @FXML
+    private TableColumn<?,?> empid_messages_col;
+    @FXML
+    private TableColumn<?,?> employee_name_messages_col;
+    @FXML
+    private TableView<Employee> emptabel_messages;
 
     private String nameme;
+    private static int ID;
+    private static String empname;
+    private static String emppassword;
+    private static String empEmail;
+
+
+    @FXML
+    public void setEmp_tableValues(){
+        empid_messages_col.setCellValueFactory(new PropertyValueFactory<>("id"));
+        employee_name_messages_col.setCellValueFactory(new PropertyValueFactory<>("name"));
+    }
 
     @FXML
     private void setProject_anchorpane(){
@@ -173,10 +191,23 @@ public class HomeScreenController implements Initializable {
         name_label.setText(username);
     }
 
-    @FXML
-    public void setEmail(String email){
-        email_textfiled_edit_profile.setText(email);
+    public void setid(int id){
+        this.ID = id;
+        Employee employee = Main_database_connection.getEmployeeByID(ID);
+        ID = employee.getId();
+        empname = employee.getName();
+        empEmail = employee.getEmail();
+        email_textfiled_edit_profile.setText(empEmail);
+        empid_label.setText(String.valueOf(ID));
+
+        System.out.println("this is the name of the emp form the json :"+empname+"and id :"+ID);
+
     }
+
+//    @FXML
+//    public void setEmail(String email){
+//        email_textfiled_edit_profile.setText(email);
+//    }
 
     @FXML
     public void getpassword(String password){
@@ -289,12 +320,13 @@ public class HomeScreenController implements Initializable {
         }
     }
 
-
-
-
     @Override
 
     public void initialize(URL location, ResourceBundle resources) {
+
+        setEmp_tableValues();
+        ObservableList<Employee> empdata = Main_database_connection.selectParticularEmployee();
+        emptabel_messages.setItems(empdata);
         try {
             Main_database_connection db = new Main_database_connection();
             ResultSet resultSet = db.selectTasks();
