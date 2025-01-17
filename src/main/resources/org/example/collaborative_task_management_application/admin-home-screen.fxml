@@ -170,9 +170,9 @@
                                        <children>
                                           <VBox alignment="CENTER" layoutX="57.0" layoutY="34.0" prefHeight="299.0" prefWidth="200.0" spacing="30.0" AnchorPane.bottomAnchor="260.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <children>
-                                                <Button fx:id="addNewEmployee_button" mnemonicParsing="false" onAction="#setAddEmployee_anchorpane" prefHeight="30.0" prefWidth="120.0" text="assigen tasks" />
+                                                <Button fx:id="addNewEmployee_button" mnemonicParsing="false" onAction="#setAddEmployee_anchorpane" prefHeight="30.0" prefWidth="120.0" text="assign tasks" />
                                                 <Button fx:id="logs_button" mnemonicParsing="false" onAction="#setLogs_anchorpane" prefHeight="30.0" prefWidth="120.0" text="logs" />
-                                                <Button fx:id="usersProfiles_button" mnemonicParsing="false" onAction="#setUsers_profile_anchorpane" prefWidth="120.0" text="users proffile" />
+                                                <Button fx:id="usersProfiles_button" mnemonicParsing="false" onAction="#setUsers_profile_anchorpane" prefWidth="120.0" text="users profile" />
                                              </children>
                                           </VBox>
                                        </children>
@@ -247,7 +247,7 @@
                                        <children>
                                           <Button fx:id="edit_profile_button" layoutX="15.0" layoutY="66.0" mnemonicParsing="false" onAction="#seedit_profile_button" prefHeight="38.0" prefWidth="173.0" text="Edit profile" />
                                           <Button layoutX="13.0" layoutY="150.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="173.0" text="report bug" />
-                                          <Button fx:id="delete_account_button" layoutX="35.0" layoutY="465.0" mnemonicParsing="false"  text="Delete Account" />
+                                          <Button fx:id="delete_account_button" layoutX="35.0" layoutY="465.0" mnemonicParsing="false" text="Delete Account" />
                                           <AnchorPane fx:id="delete_anchorpane" layoutY="244.0" prefHeight="200.0" prefWidth="200.0" visible="false">
                                              <children>
                                                 <Button fx:id="revert_button_settings" layoutX="14.0" layoutY="148.0" mnemonicParsing="false" text="revert" />

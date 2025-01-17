@@ -467,7 +467,16 @@ public class AdminHomeController implements Initializable {
         db.updateTaskDetails(taskId,task.getTitle(),empId,task);
         task_id_textfield.clear();
         empid_textfield.clear();
-        showAlert(Alert.AlertType.CONFIRMATION,"success","Task assigend to the employee");
+        ObservableList<Employee> employeeData = Main_database_connection.selectParticularEmployee();
+        ObservableList<Task> tasksss;
+        try {
+            tasksss = Main_database_connection.getTasksForTabel();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        emp_table.setItems(employeeData);
+        tasks_table.setItems(tasksss);
+        showAlert(Alert.AlertType.CONFIRMATION,"success","Task assigned to the employee");
 
     }
 

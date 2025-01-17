@@ -113,7 +113,7 @@ public class Main_database_connection {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss dd-MM-yyyy");
         ObservableList<LogEntry> data = FXCollections.observableArrayList();
         try (Statement statement = connectiondb().createStatement()){
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM activity_log");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM activity_log ORDER BY timestamp DESC");
 
             while (resultSet.next()){
                 String formattedTimestamp = resultSet.getTimestamp("timestamp").toLocalDateTime().format(formatter);
