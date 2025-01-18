@@ -184,7 +184,6 @@ public class LoginScreenController implements Initializable {
         alert.setContentText(message);
         alert.initStyle(StageStyle.UNDECORATED);
         alert.show();
-
     }
     private void setadminscreen() throws IOException {
         Parent parent = FXMLLoader.load(getClass().getResource("admin-home-screen.fxml"));

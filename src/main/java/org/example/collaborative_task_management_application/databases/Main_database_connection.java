@@ -126,7 +126,6 @@ public class Main_database_connection {
             throw new RuntimeException(e);
         }
         return data;
-
     }
     public static void deleteLog() throws SQLException {
         String quary = "TRUNCATE TABLE activity_log";
