@@ -17,7 +17,8 @@ import com.google.gson.Gson;
 public class Main_database_connection {
     private static final String URL = "jdbc:mysql://localhost:3306/taskmanager_final";
     private static final String USER = "root";
-    private static final String PASSWORD = "CHATgpt@project";
+    private static final String PASSWORD = "root";
+    //private static final String PASSWORD = "CHATgpt@project";
     private static Connection connection;
 
     public static Connection connectiondb() {
